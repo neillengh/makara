@@ -71,3 +71,9 @@ appsettings.Development.json
 output/
 datasets/
 /models/
+
+# WorkBuddy 内部记忆（含项目/个人记忆，不应入库）
+.workbuddy/
+
+# 无关的工作负载安装脚本（非项目源码）
+src/workload-install.ps1

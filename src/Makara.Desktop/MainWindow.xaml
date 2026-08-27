@@ -4,73 +4,185 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:Makara.Desktop.ViewModels"
+        xmlns:conv="clr-namespace:Makara.Desktop.Converters"
         mc:Ignorable="d"
-        Title="Makara · 摩羯" Height="700" Width="1200"
+        Title="Makara · 摩羯" Height="760" Width="1280"
         WindowStartupLocation="CenterScreen"
-        Background="{StaticResource BgPrimaryBrush}">
+        Background="{DynamicResource MkBackground}"
+        FontFamily="Microsoft YaHei UI">
+    <Window.Resources>
+        <conv:PageEqualityConverter x:Key="PageEq"/>
+    </Window.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="56"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-        <!-- 左侧导航栏 -->
-        <Border Grid.Column="0" Background="{StaticResource BgSecondaryBrush}">
-            <StackPanel Margin="0,24,0,0">
+        <!-- ==================== 左侧导航栏 ==================== -->
+        <Border Grid.Column="0" Grid.RowSpan="2" Background="{DynamicResource MkSurface}"
+                BorderBrush="{DynamicResource MkBorder}" BorderThickness="0,0,1,0">
+            <DockPanel>
                 <!-- Logo -->
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,32">
-                    <TextBlock Text="Makara" FontSize="22" FontWeight="Bold" Foreground="{StaticResource AccentPrimaryBrush}"/>
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="16,14,0,0">
+                    <Border Width="28" Height="28" CornerRadius="7"
+                            Background="{DynamicResource MkPrimarySoft}" VerticalAlignment="Center">
+                        <Path Data="{StaticResource IconBranch}" Stroke="{DynamicResource MkPrimary}"
+                              StrokeThickness="1.8" Stretch="Uniform" Margin="5"/>
+                    </Border>
+                    <TextBlock Text="Makara" FontSize="18" FontWeight="Bold" Margin="10,0,0,0"
+                               Foreground="{DynamicResource MkTextPrimary}" VerticalAlignment="Center"/>
                 </StackPanel>
+                <TextBlock DockPanel.Dock="Top" Text="v0.1.0 · MVP" FontSize="11" Margin="17,4,0,12"
+                           Foreground="{DynamicResource MkTextTertiary}"/>
 
-                <!-- 导航按钮 -->
-                <Button Content="工作流" Command="{Binding NavigateCommand}" CommandParameter="workflows"
-                        Style="{StaticResource NavButtonStyle}" Margin="8,2" Tag="workflows"/>
-                <Button Content="数据源" Command="{Binding NavigateCommand}" CommandParameter="datasources"
-                        Style="{StaticResource NavButtonStyle}" Margin="8,2" Tag="datasources"/>
-                <Button Content="数据集" Command="{Binding NavigateCommand}" CommandParameter="datasets"
-                        Style="{StaticResource NavButtonStyle}" Margin="8,2" Tag="datasets"/>
-                <Button Content="执行记录" Command="{Binding NavigateCommand}" CommandParameter="runs"
-                        Style="{StaticResource NavButtonStyle}" Margin="8,2" Tag="runs"/>
-                <Button Content="设置" Command="{Binding NavigateCommand}" CommandParameter="settings"
-                        Style="{StaticResource NavButtonStyle}" Margin="8,2" Tag="settings"/>
+                <!-- 底部：服务端状态 -->
+                <Border DockPanel.Dock="Bottom" Margin="12,0,12,12" Padding="10,8" CornerRadius="8"
+                        Background="{DynamicResource MkSurface2}">
+                    <StackPanel Orientation="Horizontal">
+                        <Ellipse Width="8" Height="8" VerticalAlignment="Center">
+                            <Ellipse.Style>
+                                <Style TargetType="Ellipse">
+                                    <Setter Property="Fill" Value="{DynamicResource MkTextTertiary}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ServerOnline}" Value="True">
+                                            <Setter Property="Fill" Value="{DynamicResource MkSuccess}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Ellipse.Style>
+                        </Ellipse>
+                        <TextBlock Text="{Binding CurrentServerName}" FontSize="11" Margin="8,0,0,0"
+                                   Foreground="{DynamicResource MkTextSecondary}"
+                                   TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
 
-                <!-- 底部版本信息 -->
-                <TextBlock Text="v0.1.0 · MVP" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"
-                           HorizontalAlignment="Center" Margin="0,0,0,16" VerticalAlignment="Bottom"/>
-            </StackPanel>
+                <!-- 导航 -->
+                <StackPanel>
+                    <RadioButton Style="{StaticResource NavButton}" GroupName="nav"
+                                 IsChecked="{Binding CurrentPage, Converter={StaticResource PageEq}, ConverterParameter=dashboard}"
+                                 Command="{Binding NavigateCommand}" CommandParameter="dashboard">
+                        <StackPanel Orientation="Horizontal">
+                            <Path Data="{StaticResource IconDashboard}" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"
+                                  StrokeThickness="1.6" Stretch="Uniform" Width="18" Height="18" VerticalAlignment="Center"/>
+                            <TextBlock Text="仪表盘" Margin="12,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource NavButton}" GroupName="nav"
+                                 IsChecked="{Binding CurrentPage, Converter={StaticResource PageEq}, ConverterParameter=workflows}"
+                                 Command="{Binding NavigateCommand}" CommandParameter="workflows">
+                        <StackPanel Orientation="Horizontal">
+                            <Path Data="{StaticResource IconBranch}" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"
+                                  StrokeThickness="1.6" Stretch="Uniform" Width="18" Height="18" VerticalAlignment="Center"/>
+                            <TextBlock Text="工作流" Margin="12,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource NavButton}" GroupName="nav"
+                                 IsChecked="{Binding CurrentPage, Converter={StaticResource PageEq}, ConverterParameter=datasources}"
+                                 Command="{Binding NavigateCommand}" CommandParameter="datasources">
+                        <StackPanel Orientation="Horizontal">
+                            <Path Data="{StaticResource IconDatabase}" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"
+                                  StrokeThickness="1.6" Stretch="Uniform" Width="18" Height="18" VerticalAlignment="Center"/>
+                            <TextBlock Text="数据源" Margin="12,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource NavButton}" GroupName="nav"
+                                 IsChecked="{Binding CurrentPage, Converter={StaticResource PageEq}, ConverterParameter=datasets}"
+                                 Command="{Binding NavigateCommand}" CommandParameter="datasets">
+                        <StackPanel Orientation="Horizontal">
+                            <Path Data="{StaticResource IconTable}" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"
+                                  StrokeThickness="1.6" Stretch="Uniform" Width="18" Height="18" VerticalAlignment="Center"/>
+                            <TextBlock Text="数据集" Margin="12,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource NavButton}" GroupName="nav"
+                                 IsChecked="{Binding CurrentPage, Converter={StaticResource PageEq}, ConverterParameter=runs}"
+                                 Command="{Binding NavigateCommand}" CommandParameter="runs">
+                        <StackPanel Orientation="Horizontal">
+                            <Path Data="{StaticResource IconActivity}" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"
+                                  StrokeThickness="1.6" Stretch="Uniform" Width="18" Height="18" VerticalAlignment="Center"/>
+                            <TextBlock Text="执行记录" Margin="12,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource NavButton}" GroupName="nav"
+                                 IsChecked="{Binding CurrentPage, Converter={StaticResource PageEq}, ConverterParameter=servers}"
+                                 Command="{Binding NavigateCommand}" CommandParameter="servers">
+                        <StackPanel Orientation="Horizontal">
+                            <Path Data="{StaticResource IconServer}" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"
+                                  StrokeThickness="1.6" Stretch="Uniform" Width="18" Height="18" VerticalAlignment="Center"/>
+                            <TextBlock Text="服务端" Margin="12,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource NavButton}" GroupName="nav"
+                                 IsChecked="{Binding CurrentPage, Converter={StaticResource PageEq}, ConverterParameter=settings}"
+                                 Command="{Binding NavigateCommand}" CommandParameter="settings">
+                        <StackPanel Orientation="Horizontal">
+                            <Path Data="{StaticResource IconSettings}" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"
+                                  StrokeThickness="1.6" Stretch="Uniform" Width="18" Height="18" VerticalAlignment="Center"/>
+                            <TextBlock Text="设置" Margin="12,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </RadioButton>
+                </StackPanel>
+            </DockPanel>
         </Border>
 
-        <!-- 右侧主内容 -->
-        <Grid Grid.Column="1" Margin="16">
+        <!-- ==================== 顶栏 ==================== -->
+        <Border Grid.Column="1" Grid.Row="0" Background="{DynamicResource MkSurface}"
+                BorderBrush="{DynamicResource MkBorder}" BorderThickness="0,0,0,1">
+            <DockPanel Margin="24,0,24,0">
+                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
+                    <!-- 搜索 -->
+                    <Grid Margin="0,0,12,0">
+                        <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                                 Width="200" Padding="30,6,8,6"/>
+                        <Path Data="{StaticResource IconSearch}" Stroke="{DynamicResource MkTextTertiary}"
+                              StrokeThickness="1.6" Stretch="Uniform" Width="14" Height="14"
+                              HorizontalAlignment="Left" VerticalAlignment="Center" Margin="9,0,0,0" IsHitTestVisible="False"/>
+                    </Grid>
+
+                    <!-- 服务端切换 -->
+                    <ComboBox ItemsSource="{Binding Servers}" SelectedItem="{Binding CurrentServer}"
+                              DisplayMemberPath="Name" MinWidth="130" Margin="0,0,12,0"/>
+
+                    <!-- 主题切换 -->
+                    <Button Style="{StaticResource IconButton}" Command="{Binding ToggleThemeCommand}"
+                            ToolTip="切换主题" Margin="0,0,12,0">
+                        <Path Data="{StaticResource IconSun}" Stroke="{DynamicResource MkTextSecondary}"
+                              StrokeThickness="1.6" Stretch="Uniform" Width="16" Height="16">
+                            <Path.Style>
+                                <Style TargetType="Path">
+                                    <Setter Property="Data" Value="{StaticResource IconSun}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsDarkTheme}" Value="False">
+                                            <Setter Property="Data" Value="{StaticResource IconMoon}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Path.Style>
+                        </Path>
+                    </Button>
+
+                    <!-- 用户 -->
+                    <Button Style="{StaticResource IconButton}" ToolTip="用户菜单">
+                        <Path Data="{StaticResource IconUser}" Stroke="{DynamicResource MkTextSecondary}"
+                              StrokeThickness="1.6" Stretch="Uniform" Width="16" Height="16"/>
+                    </Button>
+                </StackPanel>
+
+                <TextBlock Text="{Binding PageTitle}" FontSize="16" FontWeight="Medium"
+                           Foreground="{DynamicResource MkTextPrimary}" VerticalAlignment="Center"/>
+            </DockPanel>
+        </Border>
+
+        <!-- ==================== 主内容 ==================== -->
+        <Grid Grid.Column="1" Grid.Row="1" Margin="24">
             <ContentControl Content="{Binding CurrentView}"/>
         </Grid>
     </Grid>
-
-    <Window.Resources>
-        <Style x:Key="NavButtonStyle" TargetType="Button">
-            <Setter Property="Height" Value="38"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-            <Setter Property="Padding" Value="16,0"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="border" Background="Transparent" CornerRadius="6" Padding="{TemplateBinding Padding}">
-                            <ContentPresenter VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#1E2A4A"/>
-                                <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Window.Resources>
 </Window>

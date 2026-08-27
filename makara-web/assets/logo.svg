@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" role="img" aria-label="Makara">
+  <rect width="40" height="40" rx="10" fill="currentColor" fill-opacity="0.12"/>
+  <path d="M8 29V13l12 8 12-8v16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="32" cy="29" r="2.4" fill="currentColor"/>
+</svg>

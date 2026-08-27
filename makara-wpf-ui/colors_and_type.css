@@ -1,0 +1,142 @@
+/* Makara WPF UI — Design Tokens */
+
+:root {
+  /* Primary hue: cyan */
+  --mk-primary-50: #e6fbff;
+  --mk-primary-100: #b3f4ff;
+  --mk-primary-200: #80ecff;
+  --mk-primary-300: #4de3ff;
+  --mk-primary-400: #1adbff;
+  --mk-primary-500: #00d9ff;
+  --mk-primary-600: #00a8c6;
+  --mk-primary-700: #007d94;
+  --mk-primary-800: #005261;
+  --mk-primary-900: #00272e;
+
+  /* Neutral / slate */
+  --mk-neutral-0: #ffffff;
+  --mk-neutral-50: #f8fafc;
+  --mk-neutral-100: #f1f5f9;
+  --mk-neutral-200: #e2e8f0;
+  --mk-neutral-300: #cbd5e1;
+  --mk-neutral-400: #94a3b8;
+  --mk-neutral-500: #64748b;
+  --mk-neutral-600: #475569;
+  --mk-neutral-700: #334155;
+  --mk-neutral-800: #1e293b;
+  --mk-neutral-900: #0f172a;
+  --mk-neutral-950: #020617;
+
+  /* Semantic tokens — dark default */
+  --mk-background: #0b0f17;
+  --mk-foreground: #f0f4f8;
+  --mk-card: #111827;
+  --mk-card-foreground: #f0f4f8;
+  --mk-popover: #151d2c;
+  --mk-popover-foreground: #f0f4f8;
+  --mk-primary: #00d9ff;
+  --mk-primary-foreground: #0b0f17;
+  --mk-secondary: #1e293b;
+  --mk-secondary-foreground: #f0f4f8;
+  --mk-muted: #151d2c;
+  --mk-muted-foreground: #94a3b8;
+  --mk-accent: #1e293b;
+  --mk-accent-foreground: #f0f4f8;
+  --mk-destructive: #ef4444;
+  --mk-destructive-foreground: #ffffff;
+  --mk-border: #1e293b;
+  --mk-input: #1e293b;
+  --mk-ring: rgba(0, 217, 255, 0.35);
+
+  /* Surface stack */
+  --mk-surface: #111827;
+  --mk-surface-2: #1a2538;
+  --mk-surface-3: #243247;
+
+  /* Text */
+  --mk-text-primary: #f0f4f8;
+  --mk-text-secondary: #94a3b8;
+  --mk-text-tertiary: #64748b;
+
+  /* Status */
+  --mk-state-success: #10b981;
+  --mk-state-warning: #f59e0b;
+  --mk-state-error: #ef4444;
+  --mk-state-info: #3b82f6;
+
+  /* Radius */
+  --mk-radius-sm: 4px;
+  --mk-radius-md: 8px;
+  --mk-radius-lg: 12px;
+  --mk-radius-full: 9999px;
+
+  /* Typography */
+  --mk-font-sans: Inter, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+  --mk-font-mono: "JetBrains Mono", "Fira Code", "SF Mono", Consolas, monospace;
+
+  /* Shadow */
+  --mk-shadow-1: 0 1px 2px rgba(2, 6, 23, 0.35), 0 1px 1px rgba(2, 6, 23, 0.25);
+  --mk-shadow-2: 0 8px 24px -8px rgba(0, 0, 0, 0.45);
+  --mk-shadow-3: 0 24px 60px -20px rgba(0, 0, 0, 0.60);
+}
+
+.light,
+html.light {
+  --mk-background: #f8fafc;
+  --mk-foreground: #0f172a;
+  --mk-card: #ffffff;
+  --mk-card-foreground: #0f172a;
+  --mk-popover: #ffffff;
+  --mk-popover-foreground: #0f172a;
+  --mk-primary: #00a8c6;
+  --mk-primary-foreground: #ffffff;
+  --mk-secondary: #f1f5f9;
+  --mk-secondary-foreground: #0f172a;
+  --mk-muted: #f1f5f9;
+  --mk-muted-foreground: #64748b;
+  --mk-accent: #f1f5f9;
+  --mk-accent-foreground: #0f172a;
+  --mk-destructive: #ef4444;
+  --mk-destructive-foreground: #ffffff;
+  --mk-border: #e2e8f0;
+  --mk-input: #e2e8f0;
+  --mk-ring: rgba(0, 168, 198, 0.35);
+
+  --mk-surface: #ffffff;
+  --mk-surface-2: #f1f5f9;
+  --mk-surface-3: #e2e8f0;
+
+  --mk-text-primary: #0f172a;
+  --mk-text-secondary: #475569;
+  --mk-text-tertiary: #64748b;
+
+  --mk-shadow-1: 0 1px 2px rgba(15, 23, 42, 0.06), 0 1px 1px rgba(15, 23, 42, 0.04);
+  --mk-shadow-2: 0 8px 24px -8px rgba(15, 23, 42, 0.12);
+  --mk-shadow-3: 0 24px 60px -20px rgba(15, 23, 42, 0.20);
+}
+
+@theme inline {
+  --color-background: var(--mk-background);
+  --color-foreground: var(--mk-foreground);
+  --color-card: var(--mk-card);
+  --color-card-foreground: var(--mk-card-foreground);
+  --color-popover: var(--mk-popover);
+  --color-popover-foreground: var(--mk-popover-foreground);
+  --color-primary: var(--mk-primary);
+  --color-primary-foreground: var(--mk-primary-foreground);
+  --color-secondary: var(--mk-secondary);
+  --color-secondary-foreground: var(--mk-secondary-foreground);
+  --color-muted: var(--mk-muted);
+  --color-muted-foreground: var(--mk-muted-foreground);
+  --color-accent: var(--mk-accent);
+  --color-accent-foreground: var(--mk-accent-foreground);
+  --color-destructive: var(--mk-destructive);
+  --color-destructive-foreground: var(--mk-destructive-foreground);
+  --color-border: var(--mk-border);
+  --color-input: var(--mk-input);
+  --color-ring: var(--mk-ring);
+
+  --radius-sm: var(--mk-radius-sm);
+  --radius-md: var(--mk-radius-md);
+  --radius-lg: var(--mk-radius-lg);
+}

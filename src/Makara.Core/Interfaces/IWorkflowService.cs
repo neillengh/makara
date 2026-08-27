@@ -11,4 +11,7 @@ public interface IWorkflowService
     Task<bool> DeleteAsync(string id);
     Task<string> RunAsync(string workflowId);
     Task<WorkflowRun?> GetRunStatusAsync(string runId);
+
+    /// <summary>按开始时间倒序查询运行记录（供客户端执行记录页/仪表盘展示）。</summary>
+    Task<List<WorkflowRun>> ListRunsAsync(int take = 100);
 }

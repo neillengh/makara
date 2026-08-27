@@ -8,13 +8,37 @@ namespace Makara.Desktop.Services;
 
 public class ApiClient
 {
-    private readonly HttpClient _http;
+    private readonly HttpClient _http = new();
 
-    public string BaseUrl { get; set; } = "http://localhost:5000";
+    public string BaseUrl { get; private set; } = "http://localhost:5000";
 
     public ApiClient()
     {
-        _http = new HttpClient { BaseAddress = new Uri(BaseUrl) };
+        _http.BaseAddress = new Uri(BaseUrl);
+        _http.Timeout = TimeSpan.FromSeconds(30);
+    }
+
+    /// <summary>切换服务端地址（重建 HttpClient）</summary>
+    public void SetBaseUrl(string baseUrl)
+    {
+        if (string.IsNullOrWhiteSpace(baseUrl)) return;
+        BaseUrl = baseUrl.TrimEnd('/');
+        _http.BaseAddress = new Uri(BaseUrl);
+    }
+
+    /// <summary>服务端健康检查</summary>
+    public async Task<bool> CheckHealthAsync()
+    {
+        try
+        {
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            var resp = await _http.GetAsync("api/system/health", cts.Token);
+            return resp.IsSuccessStatusCode;
+        }
+        catch
+        {
+            return false;
+        }
     }
 
     // === DataSources ===
@@ -65,6 +89,22 @@ public class ApiClient
 
     public Task<WorkflowRun?> GetRunStatusAsync(string runId) =>
         _http.GetFromJsonAsync<WorkflowRun>($"api/workflows/runs/{runId}/status");
+
+    // === Datasets ===
+    public Task<List<DatasetInfo>?> GetDatasetsAsync() =>
+        _http.GetFromJsonAsync<List<DatasetInfo>>("api/datasets");
+
+    public Task<DatasetInfo?> GetDatasetAsync(string id) =>
+        _http.GetFromJsonAsync<DatasetInfo>($"api/datasets/{id}");
+
+    public Task<List<DatasetSample>?> GetDatasetSamplesAsync(string id, int skip = 0, int take = 10) =>
+        _http.GetFromJsonAsync<List<DatasetSample>>($"api/datasets/{id}/samples?skip={skip}&take={take}");
+
+    public async Task<bool> DeleteDatasetAsync(string id)
+    {
+        var resp = await _http.DeleteAsync($"api/datasets/{id}");
+        return resp.IsSuccessStatusCode;
+    }
 
     // === ETL ===
     public async Task<EtlResult?> ExecuteEtlAsync(EtlRequest req) =>

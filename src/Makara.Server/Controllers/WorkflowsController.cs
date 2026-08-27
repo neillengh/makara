@@ -53,4 +53,13 @@ public class WorkflowsController(IWorkflowService service) : ControllerBase
         var run = await service.GetRunStatusAsync(runId);
         return run is null ? NotFound() : Ok(run);
     }
+
+    /// <summary>运行记录列表（按开始时间倒序），供客户端执行记录页与仪表盘展示。</summary>
+    [HttpGet("runs")]
+    public async Task<IActionResult> ListRuns([FromQuery] int take = 100)
+    {
+        if (take is < 1 or > 500) take = 100;
+        var runs = await service.ListRunsAsync(take);
+        return Ok(runs);
+    }
 }

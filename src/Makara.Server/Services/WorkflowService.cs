@@ -48,4 +48,12 @@ public class WorkflowService : IWorkflowService
 
     public async Task<WorkflowRun?> GetRunStatusAsync(string runId) =>
         await _runRepo.GetByIdAsync(runId);
+
+    public async Task<List<WorkflowRun>> ListRunsAsync(int take = 100) =>
+        await _runRepo.GetAllAsync(
+            predicate: null,
+            skip: 0,
+            take: Math.Clamp(take, 1, 500),
+            orderByKey: nameof(WorkflowRun.StartedAt),
+            descending: true);
 }

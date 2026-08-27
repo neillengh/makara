@@ -1,0 +1,748 @@
+{
+  "data": [
+    {
+      "id": "page-login",
+      "title": "登录",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1724732160000,
+      "canvasData": {
+        "x": 0,
+        "y": 0,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-14c286c4",
+          "measuredAt": 1787822474521
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/login.html",
+        "interactions": [
+          {
+            "domId": "btn-login",
+            "targetPageId": "page-dashboard",
+            "transitionLabel": "登录成功"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-dashboard",
+      "title": "仪表盘",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1724732160000,
+      "canvasData": {
+        "x": 480,
+        "y": 0,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 902,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-d883999a",
+          "measuredAt": 1787822474521
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/dashboard.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-dashboard",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-workflows",
+            "targetPageId": "page-workflows",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-data-sources",
+            "targetPageId": "page-data-sources",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-datasets",
+            "targetPageId": "page-datasets",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-runs",
+            "targetPageId": "page-runs",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-servers",
+            "targetPageId": "page-servers",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-settings",
+            "targetPageId": "page-settings",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "btn-new-workflow",
+            "targetPageId": "page-workflows",
+            "transitionLabel": "新建工作流"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-workflows",
+      "title": "工作流管理",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1724732160000,
+      "canvasData": {
+        "x": 960,
+        "y": 0,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-e073cff1",
+          "measuredAt": 1787822474521
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/workflows.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-dashboard",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-workflows",
+            "targetPageId": "page-workflows",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-data-sources",
+            "targetPageId": "page-data-sources",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-datasets",
+            "targetPageId": "page-datasets",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-runs",
+            "targetPageId": "page-runs",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-servers",
+            "targetPageId": "page-servers",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-settings",
+            "targetPageId": "page-settings",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "btn-new-workflow",
+            "targetPageId": "page-workflow-canvas",
+            "transitionLabel": "进入画布"
+          },
+          {
+            "domId": "btn-templates",
+            "targetPageId": "page-workflow-templates",
+            "hideEdge": true,
+            "transitionLabel": "模板库"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-workflow-canvas",
+      "title": "工作流画布",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1724732160000,
+      "canvasData": {
+        "x": 1440,
+        "y": 0,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-329c2a50",
+          "measuredAt": 1787822474521
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/workflow-canvas.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-dashboard",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-workflows",
+            "targetPageId": "page-workflows",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-data-sources",
+            "targetPageId": "page-data-sources",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-datasets",
+            "targetPageId": "page-datasets",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-runs",
+            "targetPageId": "page-runs",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-servers",
+            "targetPageId": "page-servers",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-settings",
+            "targetPageId": "page-settings",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "btn-back",
+            "targetPageId": "page-workflows",
+            "hideEdge": true,
+            "transitionLabel": "返回列表"
+          },
+          {
+            "domId": "btn-run",
+            "targetPageId": "page-runs",
+            "hideEdge": true,
+            "transitionLabel": "查看运行"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-workflow-templates",
+      "title": "工作流模板",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1724732160000,
+      "canvasData": {
+        "x": 0,
+        "y": 373,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-a081e1b8",
+          "measuredAt": 1787822474521
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/workflow-templates.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-dashboard",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-workflows",
+            "targetPageId": "page-workflows",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-data-sources",
+            "targetPageId": "page-data-sources",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-datasets",
+            "targetPageId": "page-datasets",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-runs",
+            "targetPageId": "page-runs",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-servers",
+            "targetPageId": "page-servers",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-settings",
+            "targetPageId": "page-settings",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "use-template-1",
+            "targetPageId": "page-workflow-canvas",
+            "hideEdge": true,
+            "transitionLabel": "套用模板"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-data-sources",
+      "title": "数据源管理",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1724732160000,
+      "canvasData": {
+        "x": 480,
+        "y": 373,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-06bc42ee",
+          "measuredAt": 1787822474521
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/data-sources.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-dashboard",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-workflows",
+            "targetPageId": "page-workflows",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-data-sources",
+            "targetPageId": "page-data-sources",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-datasets",
+            "targetPageId": "page-datasets",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-runs",
+            "targetPageId": "page-runs",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-servers",
+            "targetPageId": "page-servers",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-settings",
+            "targetPageId": "page-settings",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-field-mapping",
+      "title": "字段映射配置",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1724732160000,
+      "canvasData": {
+        "x": 960,
+        "y": 373,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 982,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-30b81652",
+          "measuredAt": 1787822474521
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/field-mapping.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-dashboard",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-workflows",
+            "targetPageId": "page-workflows",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-data-sources",
+            "targetPageId": "page-data-sources",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-datasets",
+            "targetPageId": "page-datasets",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-runs",
+            "targetPageId": "page-runs",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-servers",
+            "targetPageId": "page-servers",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-settings",
+            "targetPageId": "page-settings",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-datasets",
+      "title": "数据集管理",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1724732160000,
+      "canvasData": {
+        "x": 1440,
+        "y": 373,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 924,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-d2599d22",
+          "measuredAt": 1787822474521
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/datasets.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-dashboard",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-workflows",
+            "targetPageId": "page-workflows",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-data-sources",
+            "targetPageId": "page-data-sources",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-datasets",
+            "targetPageId": "page-datasets",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-runs",
+            "targetPageId": "page-runs",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-servers",
+            "targetPageId": "page-servers",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-settings",
+            "targetPageId": "page-settings",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-runs",
+      "title": "执行记录",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1724732160000,
+      "canvasData": {
+        "x": 1920,
+        "y": 373,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 1003,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-ea555df1",
+          "measuredAt": 1787822474521
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/runs.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-dashboard",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-workflows",
+            "targetPageId": "page-workflows",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-data-sources",
+            "targetPageId": "page-data-sources",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-datasets",
+            "targetPageId": "page-datasets",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-runs",
+            "targetPageId": "page-runs",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-servers",
+            "targetPageId": "page-servers",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-settings",
+            "targetPageId": "page-settings",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-servers",
+      "title": "服务端管理",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1724732160000,
+      "canvasData": {
+        "x": 2400,
+        "y": 373,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-322931bf",
+          "measuredAt": 1787822474521
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/servers.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-dashboard",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-workflows",
+            "targetPageId": "page-workflows",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-data-sources",
+            "targetPageId": "page-data-sources",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-datasets",
+            "targetPageId": "page-datasets",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-runs",
+            "targetPageId": "page-runs",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-servers",
+            "targetPageId": "page-servers",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-settings",
+            "targetPageId": "page-settings",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-settings",
+      "title": "设置",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1724732160000,
+      "canvasData": {
+        "x": 2880,
+        "y": 373,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 1589,
+          "viewportWidth": 1440,
+          "sourceHash": "fnv1a-13d91c00",
+          "measuredAt": 1787822474521
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/settings.html",
+        "interactions": [
+          {
+            "domId": "nav-dashboard",
+            "targetPageId": "page-dashboard",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-workflows",
+            "targetPageId": "page-workflows",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-data-sources",
+            "targetPageId": "page-data-sources",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-datasets",
+            "targetPageId": "page-datasets",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-runs",
+            "targetPageId": "page-runs",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-servers",
+            "targetPageId": "page-servers",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          },
+          {
+            "domId": "nav-settings",
+            "targetPageId": "page-settings",
+            "hideEdge": true,
+            "transitionLabel": "侧边栏导航"
+          }
+        ]
+      }
+    },
+    {
+      "id": "image-001",
+      "title": "Makara Logo",
+      "type": "image",
+      "version": 1,
+      "createdAt": 1724732160000,
+      "canvasData": {
+        "x": 0,
+        "y": 746
+      },
+      "devMetadata": {
+        "imageSrc": "assets/logo-white.png"
+      }
+    }
+  ],
+  "config": {
+    "autoLayout": true,
+    "deviceType": "desktop",
+    "projectName": "Makara WPF 客户端 UI",
+    "designLibrary": null,
+    "visualEditorEnabled": false
+  }
+}

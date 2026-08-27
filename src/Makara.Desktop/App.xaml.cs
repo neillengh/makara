@@ -14,6 +14,10 @@ public partial class App : Application
         var services = new ServiceCollection();
         services.AddSingleton<ApiClient>();
         services.AddSingleton<SseClient>();
+        services.AddSingleton<ServerConfigService>();
+        services.AddSingleton<SettingsService>();
+        services.AddSingleton<ThemeService>();
+        services.AddSingleton<RunHistoryService>();
         services.AddSingleton<MainViewModel>();
         _services = services.BuildServiceProvider();
     }

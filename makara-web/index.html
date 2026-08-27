@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Makara · 数据 · 模型 · 融合微调</title>
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+  <link rel="stylesheet" href="css/app.css">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+  <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
+  <style type="text/tailwindcss">
+    @theme inline {
+      --color-background: var(--mk-background);
+      --color-foreground: var(--mk-foreground);
+      --color-card: var(--mk-card);
+      --color-card-foreground: var(--mk-card-foreground);
+      --color-popover: var(--mk-popover);
+      --color-popover-foreground: var(--mk-popover-foreground);
+      --color-primary: var(--mk-primary);
+      --color-primary-foreground: var(--mk-primary-foreground);
+      --color-secondary: var(--mk-secondary);
+      --color-secondary-foreground: var(--mk-secondary-foreground);
+      --color-muted: var(--mk-muted);
+      --color-muted-foreground: var(--mk-muted-foreground);
+      --color-accent: var(--mk-accent);
+      --color-accent-foreground: var(--mk-accent-foreground);
+      --color-destructive: var(--mk-destructive);
+      --color-destructive-foreground: var(--mk-destructive-foreground);
+      --color-border: var(--mk-border);
+      --color-input: var(--mk-input);
+      --color-ring: var(--mk-ring);
+      --radius-sm: var(--mk-radius-sm);
+      --radius-md: var(--mk-radius-md);
+      --radius-lg: var(--mk-radius-lg);
+    }
+    @layer base {
+      body { background: var(--mk-background); color: var(--mk-foreground); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Login host (shown when not authenticated / on #/login) -->
+<div id="login-root" class="mk-login-host--standalone" hidden></div>
+
+<!-- App shell -->
+<div id="app" class="mk-shell" hidden>
+  <aside class="mk-shell__sidebar">
+    <div class="flex items-center gap-3 px-4" style="height: 56px;">
+      <a href="#/dashboard" class="mk-brand" aria-label="Makara">
+        <svg class="mk-brand__mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+          <rect width="40" height="40" rx="10" fill="currentColor" fill-opacity="0.12"/>
+          <path d="M8 29V13l12 8 12-8v16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="32" cy="29" r="2.4" fill="currentColor"/>
+        </svg>
+        <span class="mk-brand__word">Makara</span>
+      </a>
+    </div>
+
+    <div class="px-4 py-2 text-xs" style="color: var(--mk-text-secondary);">
+      v0.1.0 · MVP
+    </div>
+
+    <nav class="mk-shell__nav" id="shell-nav">
+      <a href="#/dashboard"        class="mk-shell__nav-item" data-nav-key="dashboard"     data-active="false"><i data-lucide="layout-dashboard"></i><span>仪表盘</span></a>
+      <a href="#/workflows"        class="mk-shell__nav-item" data-nav-key="workflows"     data-active="false"><i data-lucide="git-branch"></i><span>工作流</span></a>
+      <a href="#/data-sources"     class="mk-shell__nav-item" data-nav-key="data-sources"  data-active="false"><i data-lucide="database"></i><span>数据源</span></a>
+      <a href="#/datasets"         class="mk-shell__nav-item" data-nav-key="datasets"      data-active="false"><i data-lucide="table"></i><span>数据集</span></a>
+      <a href="#/runs"            class="mk-shell__nav-item" data-nav-key="runs"           data-active="false"><i data-lucide="activity"></i><span>执行记录</span></a>
+      <a href="#/servers"         class="mk-shell__nav-item" data-nav-key="servers"        data-active="false"><i data-lucide="server"></i><span>服务端</span></a>
+      <a href="#/settings"        class="mk-shell__nav-item" data-nav-key="settings"       data-active="false"><i data-lucide="settings"></i><span>设置</span></a>
+    </nav>
+
+    <div style="margin-top:auto; padding: 16px;">
+      <button id="btn-logout" class="mk-btn mk-btn--ghost" style="width:100%; justify-content:flex-start;">
+        <i data-lucide="log-out"></i><span>退出登录</span>
+      </button>
+    </div>
+  </aside>
+
+  <header class="mk-shell__header" id="shell-header"></header>
+
+  <main class="mk-shell__main" id="view"></main>
+</div>
+
+<!-- Page-scoped style/script sandbox injected by loader -->
+<div id="page-sandbox" hidden aria-hidden="true"></div>
+
+<!-- Toast + modal roots -->
+<div class="mk-toast-wrap" id="toast-wrap" aria-live="polite"></div>
+<div id="modal-root"></div>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

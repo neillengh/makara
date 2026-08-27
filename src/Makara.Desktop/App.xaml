@@ -3,76 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Makara.Desktop">
     <Application.Resources>
-        <!-- 颜色 -->
-        <Color x:Key="BgPrimary">#1A1A2E</Color>
-        <Color x:Key="BgSecondary">#16213E</Color>
-        <Color x:Key="BgCard">#0F3460</Color>
-        <Color x:Key="AccentPrimary">#E94560</Color>
-        <Color x:Key="AccentSecondary">#00D9FF</Color>
-        <Color x:Key="TextPrimary">#E0E0E0</Color>
-        <Color x:Key="TextSecondary">#A0A0B0</Color>
-        <Color x:Key="BorderPrimary">#2A2A4A</Color>
-
-        <SolidColorBrush x:Key="BgPrimaryBrush" Color="{StaticResource BgPrimary}"/>
-        <SolidColorBrush x:Key="BgSecondaryBrush" Color="{StaticResource BgSecondary}"/>
-        <SolidColorBrush x:Key="BgCardBrush" Color="{StaticResource BgCard}"/>
-        <SolidColorBrush x:Key="AccentPrimaryBrush" Color="{StaticResource AccentPrimary}"/>
-        <SolidColorBrush x:Key="AccentSecondaryBrush" Color="{StaticResource AccentSecondary}"/>
-        <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource TextPrimary}"/>
-        <SolidColorBrush x:Key="TextSecondaryBrush" Color="{StaticResource TextSecondary}"/>
-        <SolidColorBrush x:Key="BorderPrimaryBrush" Color="{StaticResource BorderPrimary}"/>
-
-        <!-- 全局样式 -->
-        <Style TargetType="Window">
-            <Setter Property="Background" Value="{StaticResource BgPrimaryBrush}"/>
-            <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
-        </Style>
-
-        <Style TargetType="TextBlock">
-            <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
-        </Style>
-
-        <Style TargetType="TextBox">
-            <Setter Property="Background" Value="{StaticResource BgSecondaryBrush}"/>
-            <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
-            <Setter Property="BorderBrush" Value="{StaticResource BorderPrimaryBrush}"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Padding" Value="8,6"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="CaretBrush" Value="{StaticResource AccentSecondaryBrush}"/>
-        </Style>
-
-        <Style TargetType="Button">
-            <Setter Property="Background" Value="{StaticResource AccentPrimaryBrush}"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="20,8"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="4" Padding="{TemplateBinding Padding}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style TargetType="ComboBox">
-            <Setter Property="Background" Value="{StaticResource BgSecondaryBrush}"/>
-            <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
-            <Setter Property="BorderBrush" Value="{StaticResource BorderPrimaryBrush}"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Padding" Value="8,6"/>
-            <Setter Property="FontSize" Value="14"/>
-        </Style>
-
-        <Style TargetType="ProgressBar">
-            <Setter Property="Background" Value="{StaticResource BgSecondaryBrush}"/>
-            <Setter Property="Foreground" Value="{StaticResource AccentSecondaryBrush}"/>
-            <Setter Property="Height" Value="6"/>
-        </Style>
+        <!-- 主题字典在运行时由 ThemeService 动态替换（暗色默认） -->
+        <ResourceDictionary Source="Themes/Theme.Dark.xaml"/>
+        <ResourceDictionary Source="Themes/Icons.xaml"/>
+        <ResourceDictionary Source="Themes/Controls.xaml"/>
     </Application.Resources>
 </Application>

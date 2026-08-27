@@ -1,0 +1,243 @@
+<UserControl x:Class="Makara.Desktop.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:conv="clr-namespace:Makara.Desktop.Converters"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <conv:PageEqualityConverter x:Key="Eq"/>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel MaxWidth="860" HorizontalAlignment="Left" Margin="0,0,16,16">
+
+            <!-- ============ 页头 ============ -->
+            <DockPanel Margin="0,0,0,20">
+                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                    <Button Style="{StaticResource SecondaryButton}" Command="{Binding ResetCommand}" Padding="14,7" Margin="0,0,12,0">
+                        <StackPanel Orientation="Horizontal">
+                            <Path Data="{StaticResource IconRefresh}" Stroke="{DynamicResource MkTextSecondary}"
+                                  StrokeThickness="1.6" Stretch="Uniform" Width="13" Height="13" VerticalAlignment="Center"/>
+                            <TextBlock Text="恢复默认" Margin="8,0,0,0" VerticalAlignment="Center" FontSize="12"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Command="{Binding SaveCommand}" Padding="14,7">
+                        <StackPanel Orientation="Horizontal">
+                            <Path Data="{StaticResource IconSave}" Stroke="{DynamicResource MkPrimaryForeground}"
+                                  StrokeThickness="1.6" Stretch="Uniform" Width="13" Height="13" VerticalAlignment="Center"/>
+                            <TextBlock Text="保存设置" Margin="8,0,0,0" VerticalAlignment="Center" FontSize="12"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+                <TextBlock Text="设置" FontSize="20" FontWeight="SemiBold" VerticalAlignment="Center"/>
+            </DockPanel>
+
+            <!-- ============ 外观 ============ -->
+            <Border Style="{StaticResource Card}" Padding="20" Margin="0,0,0,16">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource SectionTitle}" Text="外观" Margin="0,0,0,16"/>
+
+                    <!-- 主题模式 -->
+                    <Grid Margin="0,0,0,16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="主题模式" FontSize="13"/>
+                            <TextBlock Text="选择深色或浅色界面主题" Style="{StaticResource HintText}" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal">
+                            <RadioButton Style="{StaticResource OptionButton}" GroupName="theme" Command="{Binding SetThemeCommand}" CommandParameter="dark"
+                                         IsChecked="{Binding S.Theme, Converter={StaticResource Eq}, ConverterParameter=dark}" Content="深色"/>
+                            <RadioButton Style="{StaticResource OptionButton}" GroupName="theme" Command="{Binding SetThemeCommand}" CommandParameter="light"
+                                         IsChecked="{Binding S.Theme, Converter={StaticResource Eq}, ConverterParameter=light}" Content="浅色" Margin="8,0,0,0"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- 界面缩放 -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="界面缩放" FontSize="13"/>
+                            <TextBlock Text="调整界面元素显示大小" Style="{StaticResource HintText}" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal">
+                            <RadioButton Style="{StaticResource OptionButton}" GroupName="scale" Command="{Binding SetScaleCommand}" CommandParameter="small"
+                                         IsChecked="{Binding S.UiScale, Converter={StaticResource Eq}, ConverterParameter=small}" Content="小"/>
+                            <RadioButton Style="{StaticResource OptionButton}" GroupName="scale" Command="{Binding SetScaleCommand}" CommandParameter="medium"
+                                         IsChecked="{Binding S.UiScale, Converter={StaticResource Eq}, ConverterParameter=medium}" Content="中" Margin="8,0,0,0"/>
+                            <RadioButton Style="{StaticResource OptionButton}" GroupName="scale" Command="{Binding SetScaleCommand}" CommandParameter="large"
+                                         IsChecked="{Binding S.UiScale, Converter={StaticResource Eq}, ConverterParameter=large}" Content="大" Margin="8,0,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- ============ 默认参数 ============ -->
+            <Border Style="{StaticResource Card}" Padding="20" Margin="0,0,0,16">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource SectionTitle}" Text="默认参数" Margin="0,0,0,16"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,12,12">
+                            <TextBlock Style="{StaticResource FieldLabel}" Text="默认训练轮数" Margin="0,0,0,4"/>
+                            <TextBox Text="{Binding S.DefaultEpochs, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="0" Grid.Column="1" Margin="12,0,0,12">
+                            <TextBlock Style="{StaticResource FieldLabel}" Text="默认学习率" Margin="0,0,0,4"/>
+                            <TextBox Text="{Binding S.DefaultLearningRate, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,12,0">
+                            <TextBlock Style="{StaticResource FieldLabel}" Text="默认验证集比例" Margin="0,0,0,4"/>
+                            <TextBox Text="{Binding S.DefaultValSplit, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="1" Margin="12,0,0,0">
+                            <TextBlock Style="{StaticResource FieldLabel}" Text="默认批次大小" Margin="0,0,0,4"/>
+                            <TextBox Text="{Binding S.DefaultBatchSize, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- ============ 数据安全 ============ -->
+            <Border Style="{StaticResource Card}" Padding="20" Margin="0,0,0,16">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource SectionTitle}" Text="数据安全" Margin="0,0,0,16"/>
+
+                    <Grid Margin="0,0,0,16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="启用字段加密" FontSize="13"/>
+                            <TextBlock Text="对敏感字段进行端到端加密存储" Style="{StaticResource HintText}" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <CheckBox Grid.Column="1" IsChecked="{Binding S.FieldEncryption}"/>
+                    </Grid>
+
+                    <Grid Margin="0,0,0,16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="启用数据脱敏" FontSize="13"/>
+                            <TextBlock Text="预览与日志中自动脱敏显示敏感信息" Style="{StaticResource HintText}" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <CheckBox Grid.Column="1" IsChecked="{Binding S.DataMasking}"/>
+                    </Grid>
+
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource FieldLabel}" Text="敏感字段正则" Margin="0,0,0,4"/>
+                        <TextBox Text="{Binding S.SensitiveRegex, UpdateSourceTrigger=PropertyChanged}"
+                                 FontFamily="Consolas"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- ============ 通知 ============ -->
+            <Border Style="{StaticResource Card}" Padding="20" Margin="0,0,0,16">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource SectionTitle}" Text="通知" Margin="0,0,0,16"/>
+
+                    <Grid Margin="0,0,0,16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="SSE 推送" FontSize="13"/>
+                            <TextBlock Text="通过服务端推送接收实时任务状态" Style="{StaticResource HintText}" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <CheckBox Grid.Column="1" IsChecked="{Binding S.SsePush}"/>
+                    </Grid>
+
+                    <Grid Margin="0,0,0,16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="任务完成提醒" FontSize="13"/>
+                            <TextBlock Text="工作流或训练任务结束时弹出通知" Style="{StaticResource HintText}" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <CheckBox Grid.Column="1" IsChecked="{Binding S.TaskReminder}"/>
+                    </Grid>
+
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource FieldLabel}" Text="邮件通知地址" Margin="0,0,0,4"/>
+                        <TextBox Text="{Binding S.NotifyEmail, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- ============ 关于 ============ -->
+            <Border Style="{StaticResource Card}" Padding="20">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource SectionTitle}" Text="关于" Margin="0,0,0,16"/>
+
+                    <Grid Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="版本号" FontSize="13" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="v0.1.0 MVP" FontSize="13" Foreground="{DynamicResource MkTextSecondary}"/>
+                    </Grid>
+
+                    <Grid Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="开源协议" FontSize="13" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="PolyForm NonCommercial" FontSize="13" Foreground="{DynamicResource MkTextSecondary}"/>
+                    </Grid>
+
+                    <Grid Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="软件更新" FontSize="13" VerticalAlignment="Center"/>
+                        <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Command="{Binding CheckUpdateCommand}" Padding="12,5">
+                            <TextBlock Text="检查更新" FontSize="12"/>
+                        </Button>
+                    </Grid>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="项目链接" FontSize="13" VerticalAlignment="Center"/>
+                        <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Padding="12,5"
+                                Click="OnProjectLinkClick" Cursor="Hand">
+                            <StackPanel Orientation="Horizontal">
+                                <Path Data="{StaticResource IconTrendingUp}" Stroke="{DynamicResource MkPrimary}"
+                                      StrokeThickness="1.6" Stretch="Uniform" Width="12" Height="12" VerticalAlignment="Center"/>
+                                <TextBlock Text="访问项目主页" FontSize="12" Foreground="{DynamicResource MkPrimary}" Margin="6,0,0,0"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <TextBlock Text="{Binding StatusMessage}" FontSize="12" Foreground="{DynamicResource MkPrimary}" Margin="4,12,0,0"/>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

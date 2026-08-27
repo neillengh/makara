@@ -1,0 +1,164 @@
+<!-- Shared app shell for Makara WPF client -->
+<style>
+  .mk-shell {
+    display: flex;
+    min-height: 100vh;
+    font-family: var(--mk-font-sans);
+  }
+
+  .mk-shell__sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 100vh;
+    background-color: var(--mk-surface);
+    border-right: 1px solid var(--mk-border);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mk-shell__header {
+    position: fixed;
+    top: 0;
+    left: 200px;
+    right: 0;
+    height: 56px;
+    background-color: var(--mk-surface);
+    border-bottom: 1px solid var(--mk-border);
+  }
+
+  .mk-shell__main {
+    margin-left: 200px;
+    margin-top: 56px;
+    padding: 24px;
+    min-height: calc(100vh - 56px);
+    background-color: var(--mk-background);
+    color: var(--mk-text-primary);
+  }
+
+  .mk-shell__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 0 12px;
+  }
+
+  .mk-shell__nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: var(--mk-radius-md);
+    color: var(--mk-text-secondary);
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    line-height: 20px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+
+  .mk-shell__nav-item:hover {
+    background-color: var(--mk-surface-2);
+    color: var(--mk-text-primary);
+  }
+
+  .mk-shell__nav-item[data-active="true"] {
+    background-color: var(--mk-primary);
+    color: var(--mk-primary-foreground);
+  }
+</style>
+
+<div class="mk-shell">
+  <aside class="mk-shell__sidebar">
+    <div class="flex items-center gap-3 px-4" style="height: 56px;">
+      <img src="../assets/logo-white.png" alt="Makara" style="height: 32px;">
+    </div>
+
+    <div class="px-4 py-2 text-xs" style="color: var(--mk-text-secondary);">
+      v0.1.0 · MVP
+    </div>
+
+    <nav class="mk-shell__nav">
+      <a href="#" class="mk-shell__nav-item" data-dom-id="nav-dashboard" data-nav-key="dashboard" data-active="true">
+        <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+        <span>仪表盘</span>
+      </a>
+      <a href="#" class="mk-shell__nav-item" data-dom-id="nav-workflows" data-nav-key="workflows">
+        <i data-lucide="git-branch" class="w-5 h-5"></i>
+        <span>工作流</span>
+      </a>
+      <a href="#" class="mk-shell__nav-item" data-dom-id="nav-data-sources" data-nav-key="data-sources">
+        <i data-lucide="database" class="w-5 h-5"></i>
+        <span>数据源</span>
+      </a>
+      <a href="#" class="mk-shell__nav-item" data-dom-id="nav-datasets" data-nav-key="datasets">
+        <i data-lucide="table" class="w-5 h-5"></i>
+        <span>数据集</span>
+      </a>
+      <a href="#" class="mk-shell__nav-item" data-dom-id="nav-runs" data-nav-key="runs">
+        <i data-lucide="activity" class="w-5 h-5"></i>
+        <span>执行记录</span>
+      </a>
+      <a href="#" class="mk-shell__nav-item" data-dom-id="nav-servers" data-nav-key="servers">
+        <i data-lucide="server" class="w-5 h-5"></i>
+        <span>服务端</span>
+      </a>
+      <a href="#" class="mk-shell__nav-item" data-dom-id="nav-settings" data-nav-key="settings">
+        <i data-lucide="settings" class="w-5 h-5"></i>
+        <span>设置</span>
+      </a>
+    </nav>
+  </aside>
+
+  <header class="mk-shell__header">
+    <div class="flex items-center justify-between h-full px-6">
+      <div class="text-lg font-medium" style="color: var(--mk-text-primary);">
+        <!-- SLOT: pageTitle -->
+      </div>
+
+      <div class="flex items-center gap-3">
+        <input
+          type="search"
+          placeholder="搜索..."
+          class="px-3 py-1.5 text-sm rounded-md outline-none"
+          style="background-color: var(--mk-input); color: var(--mk-text-primary); border: 1px solid var(--mk-border); width: 200px;"
+        />
+
+        <select
+          class="px-3 py-1.5 text-sm rounded-md outline-none"
+          style="background-color: var(--mk-input); color: var(--mk-text-primary); border: 1px solid var(--mk-border);"
+        >
+          <option>本地服务器</option>
+          <option>开发服务器</option>
+          <option>生产服务器</option>
+        </select>
+
+        <button
+          class="flex items-center justify-center w-9 h-9 rounded-md"
+          style="background-color: var(--mk-input); color: var(--mk-text-primary); border: 1px solid var(--mk-border);"
+          aria-label="切换主题"
+        >
+          <i data-lucide="sun" class="w-5 h-5"></i>
+        </button>
+
+        <button
+          class="flex items-center justify-center w-9 h-9 rounded-md"
+          style="background-color: var(--mk-input); color: var(--mk-text-primary); border: 1px solid var(--mk-border);"
+          aria-label="用户菜单"
+        >
+          <i data-lucide="user" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="mk-shell__main">
+    <!-- SLOT: pageContent -->
+  </main>
+</div>
+
+<script>lucide.createIcons();</script>

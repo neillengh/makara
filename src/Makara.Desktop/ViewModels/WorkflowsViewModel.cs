@@ -10,6 +10,7 @@ namespace Makara.Desktop.ViewModels;
 public partial class WorkflowsViewModel : ObservableObject
 {
     private readonly ApiClient _api;
+    private readonly RunHistoryService? _runHistory;
 
     [ObservableProperty]
     private ObservableCollection<Workflow> _workflows = [];
@@ -38,9 +39,10 @@ public partial class WorkflowsViewModel : ObservableObject
 
     public Action<string>? OnEditWorkflow { get; set; }
 
-    public WorkflowsViewModel(ApiClient api)
+    public WorkflowsViewModel(ApiClient api, RunHistoryService? runHistory = null)
     {
         _api = api;
+        _runHistory = runHistory;
     }
 
     [RelayCommand]
@@ -115,6 +117,7 @@ public partial class WorkflowsViewModel : ObservableObject
             var runId = await _api.RunWorkflowAsync(wf.Id);
             ActiveRunId = runId;
             StatusMessage = $"已触发，运行ID: {runId}";
+            _ = TrackRunAsync(runId, wf.Name);
         }
         catch (Exception ex)
         {
@@ -123,6 +126,39 @@ public partial class WorkflowsViewModel : ObservableObject
         finally
         {
             IsLoading = false;
+        }
+    }
+
+    /// <summary>后台轮询运行状态，写入本地运行历史（供仪表盘统计）</summary>
+    private async Task TrackRunAsync(string runId, string workflowName)
+    {
+        if (_runHistory is null || string.IsNullOrEmpty(runId)) return;
+        _runHistory.StartRun(runId, workflowName);
+        try
+        {
+            for (var i = 0; i < 120; i++)
+            {
+                await Task.Delay(2000);
+                var run = await _api.GetRunStatusAsync(runId);
+                if (run is null) continue;
+                var status = run.Status?.ToLowerInvariant() switch
+                {
+                    "completed" or "success" => "success",
+                    "failed" or "error" => "failed",
+                    "cancelled" or "canceled" => "cancelled",
+                    _ => ""
+                };
+                if (status != "")
+                {
+                    _runHistory.FinishRun(runId, status);
+                    return;
+                }
+            }
+            _runHistory.FinishRun(runId, "failed");
+        }
+        catch
+        {
+            _runHistory.FinishRun(runId, "failed");
         }
     }
 

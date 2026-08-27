@@ -7,7 +7,12 @@ using Makara.Server.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Web API
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        // 兼容 Enum 按字符串返回（对前端更友好）
+        options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+    });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
 builder.Services.AddCors(options =>
@@ -33,17 +38,29 @@ builder.Services.AddScoped<FieldMapNodeHandler>();
 builder.Services.AddScoped<DatasetBuildNodeHandler>();
 builder.Services.AddScoped<WorkflowNodeHandlerFactory>();
 
-// Services
+// Services (original)
 builder.Services.AddScoped<IDataSourceService, DataSourceService>();
 builder.Services.AddScoped<IWorkflowService, WorkflowService>();
 builder.Services.AddScoped<IEtlService, EtlService>();
 builder.Services.AddScoped<IWorkflowEngine, WorkflowEngine>();
+
+// Services (new)
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IDatasetService, DatasetService>();
+builder.Services.AddScoped<ISystemSettingService, SystemSettingService>();
 
 // Scheduler (singleton + hosted service)
 builder.Services.AddSingleton<WorkflowSchedulerService>();
 builder.Services.AddHostedService(sp => sp.GetRequiredService<WorkflowSchedulerService>());
 
 var app = builder.Build();
+
+// ===== Seed demo data on first start (幂等) =====
+using (var scope = app.Services.CreateScope())
+{
+    var fsql = scope.ServiceProvider.GetRequiredService<IFreeSql>();
+    await SeedDataService.EnsureSeedAsync(fsql);
+}
 
 if (app.Environment.IsDevelopment())
 {

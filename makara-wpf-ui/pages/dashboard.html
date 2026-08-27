@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>仪表盘</title>
+    <style id="theme-vars">
+/* Makara WPF UI — Design Tokens */
+
+:root {
+  /* Primary hue: cyan */
+  --mk-primary-50: #e6fbff;
+  --mk-primary-100: #b3f4ff;
+  --mk-primary-200: #80ecff;
+  --mk-primary-300: #4de3ff;
+  --mk-primary-400: #1adbff;
+  --mk-primary-500: #00d9ff;
+  --mk-primary-600: #00a8c6;
+  --mk-primary-700: #007d94;
+  --mk-primary-800: #005261;
+  --mk-primary-900: #00272e;
+
+  /* Neutral / slate */
+  --mk-neutral-0: #ffffff;
+  --mk-neutral-50: #f8fafc;
+  --mk-neutral-100: #f1f5f9;
+  --mk-neutral-200: #e2e8f0;
+  --mk-neutral-300: #cbd5e1;
+  --mk-neutral-400: #94a3b8;
+  --mk-neutral-500: #64748b;
+  --mk-neutral-600: #475569;
+  --mk-neutral-700: #334155;
+  --mk-neutral-800: #1e293b;
+  --mk-neutral-900: #0f172a;
+  --mk-neutral-950: #020617;
+
+  /* Semantic tokens — dark default */
+  --mk-background: #0b0f17;
+  --mk-foreground: #f0f4f8;
+  --mk-card: #111827;
+  --mk-card-foreground: #f0f4f8;
+  --mk-popover: #151d2c;
+  --mk-popover-foreground: #f0f4f8;
+  --mk-primary: #00d9ff;
+  --mk-primary-foreground: #0b0f17;
+  --mk-secondary: #1e293b;
+  --mk-secondary-foreground: #f0f4f8;
+  --mk-muted: #151d2c;
+  --mk-muted-foreground: #94a3b8;
+  --mk-accent: #1e293b;
+  --mk-accent-foreground: #f0f4f8;
+  --mk-destructive: #ef4444;
+  --mk-destructive-foreground: #ffffff;
+  --mk-border: #1e293b;
+  --mk-input: #1e293b;
+  --mk-ring: rgba(0, 217, 255, 0.35);
+
+  /* Surface stack */
+  --mk-surface: #111827;
+  --mk-surface-2: #1a2538;
+  --mk-surface-3: #243247;
+
+  /* Text */
+  --mk-text-primary: #f0f4f8;
+  --mk-text-secondary: #94a3b8;
+  --mk-text-tertiary: #64748b;
+
+  /* Status */
+  --mk-state-success: #10b981;
+  --mk-state-warning: #f59e0b;
+  --mk-state-error: #ef4444;
+  --mk-state-info: #3b82f6;
+
+  /* Radius */
+  --mk-radius-sm: 4px;
+  --mk-radius-md: 8px;
+  --mk-radius-lg: 12px;
+  --mk-radius-full: 9999px;
+
+  /* Typography */
+  --mk-font-sans: Inter, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+  --mk-font-mono: "JetBrains Mono", "Fira Code", "SF Mono", Consolas, monospace;
+
+  /* Shadow */
+  --mk-shadow-1: 0 1px 2px rgba(2, 6, 23, 0.35), 0 1px 1px rgba(2, 6, 23, 0.25);
+  --mk-shadow-2: 0 8px 24px -8px rgba(0, 0, 0, 0.45);
+  --mk-shadow-3: 0 24px 60px -20px rgba(0, 0, 0, 0.60);
+}
+
+.light,
+html.light {
+  --mk-background: #f8fafc;
+  --mk-foreground: #0f172a;
+  --mk-card: #ffffff;
+  --mk-card-foreground: #0f172a;
+  --mk-popover: #ffffff;
+  --mk-popover-foreground: #0f172a;
+  --mk-primary: #00a8c6;
+  --mk-primary-foreground: #ffffff;
+  --mk-secondary: #f1f5f9;
+  --mk-secondary-foreground: #0f172a;
+  --mk-muted: #f1f5f9;
+  --mk-muted-foreground: #64748b;
+  --mk-accent: #f1f5f9;
+  --mk-accent-foreground: #0f172a;
+  --mk-destructive: #ef4444;
+  --mk-destructive-foreground: #ffffff;
+  --mk-border: #e2e8f0;
+  --mk-input: #e2e8f0;
+  --mk-ring: rgba(0, 168, 198, 0.35);
+
+  --mk-surface: #ffffff;
+  --mk-surface-2: #f1f5f9;
+  --mk-surface-3: #e2e8f0;
+
+  --mk-text-primary: #0f172a;
+  --mk-text-secondary: #475569;
+  --mk-text-tertiary: #64748b;
+
+  --mk-shadow-1: 0 1px 2px rgba(15, 23, 42, 0.06), 0 1px 1px rgba(15, 23, 42, 0.04);
+  --mk-shadow-2: 0 8px 24px -8px rgba(15, 23, 42, 0.12);
+  --mk-shadow-3: 0 24px 60px -20px rgba(15, 23, 42, 0.20);
+}
+
+@theme inline {
+  --color-background: var(--mk-background);
+  --color-foreground: var(--mk-foreground);
+  --color-card: var(--mk-card);
+  --color-card-foreground: var(--mk-card-foreground);
+  --color-popover: var(--mk-popover);
+  --color-popover-foreground: var(--mk-popover-foreground);
+  --color-primary: var(--mk-primary);
+  --color-primary-foreground: var(--mk-primary-foreground);
+  --color-secondary: var(--mk-secondary);
+  --color-secondary-foreground: var(--mk-secondary-foreground);
+  --color-muted: var(--mk-muted);
+  --color-muted-foreground: var(--mk-muted-foreground);
+  --color-accent: var(--mk-accent);
+  --color-accent-foreground: var(--mk-accent-foreground);
+  --color-destructive: var(--mk-destructive);
+  --color-destructive-foreground: var(--mk-destructive-foreground);
+  --color-border: var(--mk-border);
+  --color-input: var(--mk-input);
+  --color-ring: var(--mk-ring);
+
+  --radius-sm: var(--mk-radius-sm);
+  --radius-md: var(--mk-radius-md);
+  --radius-lg: var(--mk-radius-lg);
+}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--mk-background);
+    --color-foreground: var(--mk-foreground);
+    --color-card: var(--mk-card);
+    --color-card-foreground: var(--mk-card-foreground);
+    --color-popover: var(--mk-popover);
+    --color-popover-foreground: var(--mk-popover-foreground);
+    --color-primary: var(--mk-primary);
+    --color-primary-foreground: var(--mk-primary-foreground);
+    --color-secondary: var(--mk-secondary);
+    --color-secondary-foreground: var(--mk-secondary-foreground);
+    --color-muted: var(--mk-muted);
+    --color-muted-foreground: var(--mk-muted-foreground);
+    --color-accent: var(--mk-accent);
+    --color-accent-foreground: var(--mk-accent-foreground);
+    --color-destructive: var(--mk-destructive);
+    --color-destructive-foreground: var(--mk-destructive-foreground);
+    --color-border: var(--mk-border);
+    --color-input: var(--mk-input);
+    --color-ring: var(--mk-ring);
+    --radius-sm: var(--mk-radius-sm);
+    --radius-md: var(--mk-radius-md);
+    --radius-lg: var(--mk-radius-lg);
+  }
+  @layer base {
+    body { background: var(--mk-background); color: var(--mk-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style id="semantic-token-fallback">
+      .bg-background { background-color: var(--mk-background); }
+      .text-background { color: var(--mk-background); }
+      .border-background { border-color: var(--mk-background); }
+      .ring-background { --tw-ring-color: var(--mk-background); }
+      .bg-foreground { background-color: var(--mk-foreground); }
+      .text-foreground { color: var(--mk-foreground); }
+      .border-foreground { border-color: var(--mk-foreground); }
+      .ring-foreground { --tw-ring-color: var(--mk-foreground); }
+      .bg-card { background-color: var(--mk-card); }
+      .text-card { color: var(--mk-card); }
+      .border-card { border-color: var(--mk-card); }
+      .ring-card { --tw-ring-color: var(--mk-card); }
+      .bg-card-foreground { background-color: var(--mk-card-foreground); }
+      .text-card-foreground { color: var(--mk-card-foreground); }
+      .border-card-foreground { border-color: var(--mk-card-foreground); }
+      .ring-card-foreground { --tw-ring-color: var(--mk-card-foreground); }
+      .bg-popover { background-color: var(--mk-popover); }
+      .text-popover { color: var(--mk-popover); }
+      .border-popover { border-color: var(--mk-popover); }
+      .ring-popover { --tw-ring-color: var(--mk-popover); }
+      .bg-popover-foreground { background-color: var(--mk-popover-foreground); }
+      .text-popover-foreground { color: var(--mk-popover-foreground); }
+      .border-popover-foreground { border-color: var(--mk-popover-foreground); }
+      .ring-popover-foreground { --tw-ring-color: var(--mk-popover-foreground); }
+      .bg-primary { background-color: var(--mk-primary); }
+      .text-primary { color: var(--mk-primary); }
+      .border-primary { border-color: var(--mk-primary); }
+      .ring-primary { --tw-ring-color: var(--mk-primary); }
+      .bg-primary-foreground { background-color: var(--mk-primary-foreground); }
+      .text-primary-foreground { color: var(--mk-primary-foreground); }
+      .border-primary-foreground { border-color: var(--mk-primary-foreground); }
+      .ring-primary-foreground { --tw-ring-color: var(--mk-primary-foreground); }
+      .bg-secondary { background-color: var(--mk-secondary); }
+      .text-secondary { color: var(--mk-secondary); }
+      .border-secondary { border-color: var(--mk-secondary); }
+      .ring-secondary { --tw-ring-color: var(--mk-secondary); }
+      .bg-secondary-foreground { background-color: var(--mk-secondary-foreground); }
+      .text-secondary-foreground { color: var(--mk-secondary-foreground); }
+      .border-secondary-foreground { border-color: var(--mk-secondary-foreground); }
+      .ring-secondary-foreground { --tw-ring-color: var(--mk-secondary-foreground); }
+      .bg-muted { background-color: var(--mk-muted); }
+      .text-muted { color: var(--mk-muted); }
+      .border-muted { border-color: var(--mk-muted); }
+      .ring-muted { --tw-ring-color: var(--mk-muted); }
+      .bg-muted-foreground { background-color: var(--mk-muted-foreground); }
+      .text-muted-foreground { color: var(--mk-muted-foreground); }
+      .border-muted-foreground { border-color: var(--mk-muted-foreground); }
+      .ring-muted-foreground { --tw-ring-color: var(--mk-muted-foreground); }
+      .bg-accent { background-color: var(--mk-accent); }
+      .text-accent { color: var(--mk-accent); }
+      .border-accent { border-color: var(--mk-accent); }
+      .ring-accent { --tw-ring-color: var(--mk-accent); }
+      .bg-accent-foreground { background-color: var(--mk-accent-foreground); }
+      .text-accent-foreground { color: var(--mk-accent-foreground); }
+      .border-accent-foreground { border-color: var(--mk-accent-foreground); }
+      .ring-accent-foreground { --tw-ring-color: var(--mk-accent-foreground); }
+      .bg-destructive { background-color: var(--mk-destructive); }
+      .text-destructive { color: var(--mk-destructive); }
+      .border-destructive { border-color: var(--mk-destructive); }
+      .ring-destructive { --tw-ring-color: var(--mk-destructive); }
+      .bg-destructive-foreground { background-color: var(--mk-destructive-foreground); }
+      .text-destructive-foreground { color: var(--mk-destructive-foreground); }
+      .border-destructive-foreground { border-color: var(--mk-destructive-foreground); }
+      .ring-destructive-foreground { --tw-ring-color: var(--mk-destructive-foreground); }
+      .bg-border { background-color: var(--mk-border); }
+      .text-border { color: var(--mk-border); }
+      .border-border { border-color: var(--mk-border); }
+      .ring-border { --tw-ring-color: var(--mk-border); }
+      .bg-input { background-color: var(--mk-input); }
+      .text-input { color: var(--mk-input); }
+      .border-input { border-color: var(--mk-input); }
+      .ring-input { --tw-ring-color: var(--mk-input); }
+      .bg-ring { background-color: var(--mk-ring); }
+      .text-ring { color: var(--mk-ring); }
+      .border-ring { border-color: var(--mk-ring); }
+      .ring-ring { --tw-ring-color: var(--mk-ring); }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main>
+<!-- Shared app shell for Makara WPF client -->
+<style>
+  .mk-shell {
+    display: flex;
+    min-height: 100vh;
+    font-family: var(--mk-font-sans);
+  }
+
+  .mk-shell__sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 100vh;
+    background-color: var(--mk-surface);
+    border-right: 1px solid var(--mk-border);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mk-shell__header {
+    position: fixed;
+    top: 0;
+    left: 200px;
+    right: 0;
+    height: 56px;
+    background-color: var(--mk-surface);
+    border-bottom: 1px solid var(--mk-border);
+  }
+
+  .mk-shell__main {
+    margin-left: 200px;
+    margin-top: 56px;
+    padding: 24px;
+    min-height: calc(100vh - 56px);
+    background-color: var(--mk-background);
+    color: var(--mk-text-primary);
+  }
+
+  .mk-shell__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 0 12px;
+  }
+
+  .mk-shell__nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: var(--mk-radius-md);
+    color: var(--mk-text-secondary);
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    line-height: 20px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+
+  .mk-shell__nav-item:hover {
+    background-color: var(--mk-surface-2);
+    color: var(--mk-text-primary);
+  }
+
+  .mk-shell__nav-item[data-active="true"] {
+    background-color: var(--mk-primary);
+    color: var(--mk-primary-foreground);
+  }
+</style>
+
+<div class="mk-shell">
+  <aside class="mk-shell__sidebar">
+    <div class="flex items-center gap-3 px-4" style="height: 56px;">
+      <img src="../assets/logo-white.png" alt="Makara" style="height: 32px;">
+    </div>
+
+    <div class="px-4 py-2 text-xs" style="color: var(--mk-text-secondary);">
+      v0.1.0 · MVP
+    </div>
+
+    <nav class="mk-shell__nav">
+      <a href="#" class="mk-shell__nav-item" data-dom-id="nav-dashboard" data-nav-key="dashboard" data-active="true">
+        <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+        <span>仪表盘</span>
+      </a>
+      <a href="#" class="mk-shell__nav-item" data-dom-id="nav-workflows" data-nav-key="workflows" data-active="false">
+        <i data-lucide="git-branch" class="w-5 h-5"></i>
+        <span>工作流</span>
+      </a>
+      <a href="#" class="mk-shell__nav-item" data-dom-id="nav-data-sources" data-nav-key="data-sources" data-active="false">
+        <i data-lucide="database" class="w-5 h-5"></i>
+        <span>数据源</span>
+      </a>
+      <a href="#" class="mk-shell__nav-item" data-dom-id="nav-datasets" data-nav-key="datasets" data-active="false">
+        <i data-lucide="table" class="w-5 h-5"></i>
+        <span>数据集</span>
+      </a>
+      <a href="#" class="mk-shell__nav-item" data-dom-id="nav-runs" data-nav-key="runs" data-active="false">
+        <i data-lucide="activity" class="w-5 h-5"></i>
+        <span>执行记录</span>
+      </a>
+      <a href="#" class="mk-shell__nav-item" data-dom-id="nav-servers" data-nav-key="servers" data-active="false">
+        <i data-lucide="server" class="w-5 h-5"></i>
+        <span>服务端</span>
+      </a>
+      <a href="#" class="mk-shell__nav-item" data-dom-id="nav-settings" data-nav-key="settings" data-active="false">
+        <i data-lucide="settings" class="w-5 h-5"></i>
+        <span>设置</span>
+      </a>
+    </nav>
+  </aside>
+
+  <header class="mk-shell__header">
+    <div class="flex items-center justify-between h-full px-6">
+      <div class="text-lg font-medium" style="color: var(--mk-text-primary);">
+        <!-- SLOT: pageTitle -->
+        仪表盘
+      </div>
+
+      <div class="flex items-center gap-3">
+        <!-- SLOT: pageActions -->
+        <button
+          data-dom-id="btn-new-workflow"
+          class="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md"
+          style="background-color: var(--mk-primary); color: var(--mk-primary-foreground);"
+        >
+          <i data-lucide="plus" class="w-4 h-4"></i>
+          <span>新建工作流</span>
+        </button>
+
+        <input
+          type="search"
+          placeholder="搜索..."
+          class="px-3 py-1.5 text-sm rounded-md outline-none"
+          style="background-color: var(--mk-input); color: var(--mk-text-primary); border: 1px solid var(--mk-border); width: 200px;"
+        />
+
+        <select
+          class="px-3 py-1.5 text-sm rounded-md outline-none"
+          style="background-color: var(--mk-input); color: var(--mk-text-primary); border: 1px solid var(--mk-border);"
+        >
+          <option>本地服务器</option>
+          <option>开发服务器</option>
+          <option>生产服务器</option>
+        </select>
+
+        <button
+          class="flex items-center justify-center w-9 h-9 rounded-md"
+          style="background-color: var(--mk-input); color: var(--mk-text-primary); border: 1px solid var(--mk-border);"
+          aria-label="切换主题"
+        >
+          <i data-lucide="sun" class="w-5 h-5"></i>
+        </button>
+
+        <button
+          class="flex items-center justify-center w-9 h-9 rounded-md"
+          style="background-color: var(--mk-input); color: var(--mk-text-primary); border: 1px solid var(--mk-border);"
+          aria-label="用户菜单"
+        >
+          <i data-lucide="user" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="mk-shell__main">
+    <!-- SLOT: pageContent -->
+    <div class="mk-dashboard">
+      <!-- KPI 卡片 -->
+      <div class="mk-kpi-grid">
+        <div class="mk-kpi-card" data-dom-id="kpi-workflows">
+          <div>
+            <div class="mk-kpi-label">工作流数量</div>
+            <div class="mk-kpi-value">12</div>
+            <div class="mk-kpi-hint up">
+              <i data-lucide="trending-up" class="w-3 h-3"></i>
+              <span>环比 +8.3%</span>
+            </div>
+          </div>
+          <div class="mk-kpi-icon">
+            <i data-lucide="git-branch" class="w-5 h-5"></i>
+          </div>
+        </div>
+
+        <div class="mk-kpi-card" data-dom-id="kpi-datasets">
+          <div>
+            <div class="mk-kpi-label">数据集</div>
+            <div class="mk-kpi-value">48</div>
+            <div class="mk-kpi-hint up">
+              <i data-lucide="trending-up" class="w-3 h-3"></i>
+              <span>环比 +12.5%</span>
+            </div>
+          </div>
+          <div class="mk-kpi-icon">
+            <i data-lucide="table" class="w-5 h-5"></i>
+          </div>
+        </div>
+
+        <div class="mk-kpi-card" data-dom-id="kpi-success">
+          <div>
+            <div class="mk-kpi-label">运行成功</div>
+            <div class="mk-kpi-value">156</div>
+            <div class="mk-kpi-hint up">
+              <i data-lucide="trending-up" class="w-3 h-3"></i>
+              <span>环比 +5.2%</span>
+            </div>
+          </div>
+          <div class="mk-kpi-icon">
+            <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+          </div>
+        </div>
+
+        <div class="mk-kpi-card" data-dom-id="kpi-gpu">
+          <div>
+            <div class="mk-kpi-label">GPU 利用率</div>
+            <div class="mk-kpi-value">72%</div>
+            <div class="mk-kpi-hint down">
+              <i data-lucide="trending-down" class="w-3 h-3"></i>
+              <span>环比 -4.1%</span>
+            </div>
+          </div>
+          <div class="mk-kpi-icon">
+            <i data-lucide="cpu" class="w-5 h-5"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- 趋势图 + 最近执行 -->
+      <div class="mk-row chart-row">
+        <div class="mk-card">
+          <div class="mk-card-title">近 7 天运行趋势</div>
+          <div class="mk-chart-container">
+            <canvas id="chart-runs"></canvas>
+          </div>
+        </div>
+
+        <div class="mk-card">
+          <div class="mk-card-title">最近执行记录</div>
+          <div class="mk-run-list">
+            <div class="mk-run-item" data-dom-id="recent-run-1">
+              <div class="mk-run-meta">
+                <div class="mk-run-name">人脸检测流水线</div>
+                <div class="mk-run-time">2026-08-27 09:12</div>
+              </div>
+              <div class="mk-run-stats">
+                <span class="mk-status success">成功</span>
+                <span class="mk-run-duration">2m 14s</span>
+              </div>
+            </div>
+
+            <div class="mk-run-item" data-dom-id="recent-run-2">
+              <div class="mk-run-meta">
+                <div class="mk-run-name">商品分类训练</div>
+                <div class="mk-run-time">2026-08-26 22:05</div>
+              </div>
+              <div class="mk-run-stats">
+                <span class="mk-status success">成功</span>
+                <span class="mk-run-duration">14m 32s</span>
+              </div>
+            </div>
+
+            <div class="mk-run-item" data-dom-id="recent-run-3">
+              <div class="mk-run-meta">
+                <div class="mk-run-name">OCR 数据预处理</div>
+                <div class="mk-run-time">2026-08-26 18:41</div>
+              </div>
+              <div class="mk-run-stats">
+                <span class="mk-status failed">失败</span>
+                <span class="mk-run-duration">45s</span>
+              </div>
+            </div>
+
+            <div class="mk-run-item" data-dom-id="recent-run-4">
+              <div class="mk-run-meta">
+                <div class="mk-run-name">推荐模型召回</div>
+                <div class="mk-run-time">2026-08-26 14:20</div>
+              </div>
+              <div class="mk-run-stats">
+                <span class="mk-status success">成功</span>
+                <span class="mk-run-duration">8m 09s</span>
+              </div>
+            </div>
+
+            <div class="mk-run-item" data-dom-id="recent-run-5">
+              <div class="mk-run-meta">
+                <div class="mk-run-name">语音转写任务</div>
+                <div class="mk-run-time">2026-08-26 11:03</div>
+              </div>
+              <div class="mk-run-stats">
+                <span class="mk-status running">运行中</span>
+                <span class="mk-run-duration">6m 11s</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 快捷入口 -->
+      <div class="mk-row bottom-row">
+        <div class="mk-card">
+          <div class="mk-card-title">最近工作流</div>
+          <div class="mk-quick-grid">
+            <a href="#" class="mk-quick-item">
+              <div class="mk-quick-icon">
+                <i data-lucide="git-branch" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <div class="mk-quick-label">人脸检测流水线</div>
+                <div class="mk-quick-sub">12 个节点</div>
+              </div>
+            </a>
+            <a href="#" class="mk-quick-item">
+              <div class="mk-quick-icon">
+                <i data-lucide="git-branch" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <div class="mk-quick-label">商品分类训练</div>
+                <div class="mk-quick-sub">8 个节点</div>
+              </div>
+            </a>
+            <a href="#" class="mk-quick-item">
+              <div class="mk-quick-icon">
+                <i data-lucide="git-branch" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <div class="mk-quick-label">推荐模型召回</div>
+                <div class="mk-quick-sub">15 个节点</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div class="mk-card">
+          <div class="mk-card-title">最近数据集</div>
+          <div class="mk-quick-grid">
+            <a href="#" class="mk-quick-item">
+              <div class="mk-quick-icon">
+                <i data-lucide="table" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <div class="mk-quick-label">widerface-v2</div>
+                <div class="mk-quick-sub">12,800 条</div>
+              </div>
+            </a>
+            <a href="#" class="mk-quick-item">
+              <div class="mk-quick-icon">
+                <i data-lucide="table" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <div class="mk-quick-label">product-catalog</div>
+                <div class="mk-quick-sub">45,200 条</div>
+              </div>
+            </a>
+            <a href="#" class="mk-quick-item">
+              <div class="mk-quick-icon">
+                <i data-lucide="table" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <div class="mk-quick-label">voice-annotation</div>
+                <div class="mk-quick-sub">8,600 条</div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>lucide.createIcons();</script>
+    </main>
+    <script>
+      (function () {
+        const ctx = document.getElementById('chart-runs');
+        if (!ctx) return;
+        new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: ['08-21', '08-22', '08-23', '08-24', '08-25', '08-26', '08-27'],
+            datasets: [{
+              label: '运行次数',
+              data: [18, 22, 19, 25, 28, 31, 26],
+              borderColor: '#00d9ff',
+              backgroundColor: 'rgba(0, 217, 255, 0.12)',
+              borderWidth: 2,
+              pointBackgroundColor: '#00d9ff',
+              pointBorderColor: '#0b0f17',
+              pointBorderWidth: 2,
+              pointRadius: 4,
+              pointHoverRadius: 6,
+              fill: true,
+              tension: 0.35
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                backgroundColor: 'rgba(17, 24, 39, 0.95)',
+                titleColor: '#f0f4f8',
+                bodyColor: '#f0f4f8',
+                borderColor: '#1e293b',
+                borderWidth: 1,
+                padding: 10,
+                displayColors: false
+              }
+            },
+            scales: {
+              x: {
+                grid: { color: 'rgba(30, 41, 59, 0.6)', drawBorder: false },
+                ticks: { color: '#94a3b8' }
+              },
+              y: {
+                grid: { color: 'rgba(30, 41, 59, 0.6)', drawBorder: false },
+                ticks: { color: '#94a3b8', stepSize: 5 },
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      })();
+    </script>
+    <script>lucide.createIcons();</script>
+
+    <style id="page-dashboard-styles">
+      .mk-dashboard {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .mk-kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+      }
+
+      .mk-kpi-card {
+        background-color: var(--mk-card);
+        border: 1px solid var(--mk-border);
+        border-radius: var(--mk-radius-lg);
+        padding: 20px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        box-shadow: var(--mk-shadow-1);
+      }
+
+      .mk-kpi-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: var(--mk-radius-md);
+        background-color: rgba(0, 217, 255, 0.12);
+        color: var(--mk-primary);
+      }
+
+      .mk-kpi-value {
+        font-size: 28px;
+        font-weight: 600;
+        line-height: 1.2;
+        color: var(--mk-text-primary);
+      }
+
+      .mk-kpi-label {
+        font-size: 13px;
+        color: var(--mk-text-secondary);
+        margin-top: 4px;
+      }
+
+      .mk-kpi-hint {
+        font-size: 12px;
+        margin-top: 8px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .mk-kpi-hint.up { color: var(--mk-state-success); }
+      .mk-kpi-hint.down { color: var(--mk-state-error); }
+
+      .mk-row {
+        display: grid;
+        gap: 16px;
+      }
+
+      .mk-row.chart-row { grid-template-columns: 2fr 1fr; }
+      .mk-row.bottom-row { grid-template-columns: 1fr 1fr; }
+
+      .mk-card {
+        background-color: var(--mk-card);
+        border: 1px solid var(--mk-border);
+        border-radius: var(--mk-radius-lg);
+        padding: 20px;
+        box-shadow: var(--mk-shadow-1);
+      }
+
+      .mk-card-title {
+        font-size: 15px;
+        font-weight: 500;
+        color: var(--mk-text-primary);
+        margin-bottom: 16px;
+      }
+
+      .mk-chart-container {
+        position: relative;
+        height: 260px;
+      }
+
+      .mk-run-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .mk-run-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px;
+        border-radius: var(--mk-radius-md);
+        background-color: var(--mk-surface);
+        border: 1px solid var(--mk-border);
+      }
+
+      .mk-run-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .mk-run-name {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--mk-text-primary);
+      }
+
+      .mk-run-time {
+        font-size: 12px;
+        color: var(--mk-text-secondary);
+      }
+
+      .mk-run-stats {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .mk-status {
+        display: inline-flex;
+        align-items: center;
+        padding: 2px 8px;
+        border-radius: var(--mk-radius-full);
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      .mk-status.success {
+        background-color: rgba(16, 185, 129, 0.15);
+        color: var(--mk-state-success);
+      }
+
+      .mk-status.failed {
+        background-color: rgba(239, 68, 68, 0.15);
+        color: var(--mk-state-error);
+      }
+
+      .mk-status.running {
+        background-color: rgba(59, 130, 246, 0.15);
+        color: var(--mk-state-info);
+      }
+
+      .mk-run-duration {
+        font-size: 12px;
+        color: var(--mk-text-secondary);
+        min-width: 56px;
+        text-align: right;
+      }
+
+      .mk-quick-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+
+      .mk-quick-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px;
+        border-radius: var(--mk-radius-md);
+        background-color: var(--mk-surface);
+        border: 1px solid var(--mk-border);
+        text-decoration: none;
+        color: var(--mk-text-primary);
+        transition: background-color 0.15s ease, border-color 0.15s ease;
+      }
+
+      .mk-quick-item:hover {
+        background-color: var(--mk-surface-2);
+        border-color: var(--mk-primary);
+      }
+
+      .mk-quick-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: var(--mk-radius-md);
+        background-color: var(--mk-surface-3);
+        color: var(--mk-primary);
+      }
+
+      .mk-quick-label {
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .mk-quick-sub {
+        font-size: 12px;
+        color: var(--mk-text-secondary);
+        margin-top: 2px;
+      }
+
+      @media (max-width: 1200px) {
+        .mk-kpi-grid { grid-template-columns: repeat(2, 1fr); }
+        .mk-row.chart-row { grid-template-columns: 1fr; }
+        .mk-row.bottom-row { grid-template-columns: 1fr; }
+      }
+
+      @media (max-width: 768px) {
+        .mk-kpi-grid { grid-template-columns: 1fr; }
+        .mk-quick-grid { grid-template-columns: 1fr; }
+      }
+    </style>
+</body>
+</html>

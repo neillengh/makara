@@ -14,7 +14,7 @@
 *逐步演进为 Model-as-a-Service 基础设施：AI 应用通过 API 发出自然语言需求，Makara 自动分析需要哪些数据源、生成什么样的数据集、训练什么样的专属小模型，精准匹配用户与应用的真实需求。*
 
 [![License](https://img.shields.io/badge/License-PolyForm%20NC-orange.svg)](LICENSE)
-[![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
+[![.NET](https://img.shields.io/badge/.NET-10.0-512BD4?logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
 [![WPF](https://img.shields.io/badge/WPF-Windows-512BD4?logo=windows&logoColor=white)](https://github.com/dotnet/wpf)
 [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://python.org)
 [![CUDA](https://img.shields.io/badge/CUDA-12.1-76B900?logo=nvidia&logoColor=white)](https://developer.nvidia.com/cuda-toolkit)
@@ -115,7 +115,7 @@ Makara 得名于印度神话中的**摩羯**——一种半陆半海的混合生
 | 组件 | 最低要求 | 推荐配置 |
 |------|---------|---------|
 | **操作系统** | Windows 10 64位 | Windows 11 |
-| **.NET 桌面运行时** | .NET 8.0 | .NET 8.0 |
+| **.NET 桌面运行时** | .NET 10.0 | .NET 10.0 |
 | **内存** | 4GB | 8GB+ |
 | **硬盘** | 1GB | 5GB+ |
 
@@ -123,7 +123,7 @@ Makara 得名于印度神话中的**摩羯**——一种半陆半海的混合生
 | 组件 | 最低要求 | 推荐配置 |
 |------|---------|---------|
 | **操作系统** | Windows 10+ / Linux (Ubuntu 22.04+) | Windows Server 2022+ / Linux (Ubuntu 22.04+ / openEuler) |
-| **.NET SDK** | .NET 8.0 | .NET 8.0 |
+| **.NET SDK** | .NET 10.0 | .NET 10.0 |
 | **内存** | 8GB | 16GB+ |
 | **硬盘** | 10GB | 50GB+（数据集 + 未来模型文件） |
 
@@ -509,10 +509,10 @@ Makara 采用 **开源核心 + 企业版**（Open Core）模式。开源版基�
 
 ```powershell
 # 构建整个解决方案
-dotnet build Makara.sln
+dotnet build Makara.slnx
 
 # 运行测试
-dotnet test Makara.sln
+dotnet test Makara.slnx
 ```
 
 ### 你可以贡献的方向

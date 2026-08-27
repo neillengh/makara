@@ -1,0 +1,277 @@
+{
+  "nodeId": "gen-project-root",
+  "kind": "project-shell",
+  "pageIds": [
+    "page-login",
+    "page-dashboard",
+    "page-workflows",
+    "page-workflow-canvas",
+    "page-workflow-templates",
+    "page-data-sources",
+    "page-field-mapping",
+    "page-datasets",
+    "page-runs",
+    "page-servers",
+    "page-settings"
+  ],
+  "output": "partials/project-shell.html",
+  "sharedRegions": [
+    "sidebar",
+    "topbar",
+    "main-frame"
+  ],
+  "privateRegions": [],
+  "mutableSlots": [
+    "pageTitle",
+    "pageActions",
+    "pageContent"
+  ],
+  "status": "generated",
+  "children": [
+    {
+      "nodeId": "page-login",
+      "kind": "page-leaf",
+      "pageIds": [
+        "page-login"
+      ],
+      "output": "pages/login.html",
+      "sharedRegions": [],
+      "privateRegions": [
+        "full-page"
+      ],
+      "mutableSlots": [],
+      "status": "generated",
+      "children": []
+    },
+    {
+      "nodeId": "page-dashboard",
+      "kind": "page-leaf",
+      "pageIds": [
+        "page-dashboard"
+      ],
+      "output": "pages/dashboard.html",
+      "sharedRegions": [
+        "sidebar",
+        "topbar",
+        "main-frame"
+      ],
+      "privateRegions": [
+        "pageContent"
+      ],
+      "mutableSlots": [
+        "pageTitle",
+        "pageActions",
+        "pageContent"
+      ],
+      "status": "generated",
+      "children": []
+    },
+    {
+      "nodeId": "page-workflows",
+      "kind": "page-leaf",
+      "pageIds": [
+        "page-workflows"
+      ],
+      "output": "pages/workflows.html",
+      "sharedRegions": [
+        "sidebar",
+        "topbar",
+        "main-frame"
+      ],
+      "privateRegions": [
+        "pageContent"
+      ],
+      "mutableSlots": [
+        "pageTitle",
+        "pageActions",
+        "pageContent"
+      ],
+      "status": "generated",
+      "children": []
+    },
+    {
+      "nodeId": "page-workflow-canvas",
+      "kind": "page-leaf",
+      "pageIds": [
+        "page-workflow-canvas"
+      ],
+      "output": "pages/workflow-canvas.html",
+      "sharedRegions": [
+        "sidebar",
+        "topbar",
+        "main-frame"
+      ],
+      "privateRegions": [
+        "pageContent"
+      ],
+      "mutableSlots": [
+        "pageTitle",
+        "pageActions",
+        "pageContent"
+      ],
+      "status": "generated",
+      "children": []
+    },
+    {
+      "nodeId": "page-workflow-templates",
+      "kind": "page-leaf",
+      "pageIds": [
+        "page-workflow-templates"
+      ],
+      "output": "pages/workflow-templates.html",
+      "sharedRegions": [
+        "sidebar",
+        "topbar",
+        "main-frame"
+      ],
+      "privateRegions": [
+        "pageContent"
+      ],
+      "mutableSlots": [
+        "pageTitle",
+        "pageActions",
+        "pageContent"
+      ],
+      "status": "generated",
+      "children": []
+    },
+    {
+      "nodeId": "page-data-sources",
+      "kind": "page-leaf",
+      "pageIds": [
+        "page-data-sources"
+      ],
+      "output": "pages/data-sources.html",
+      "sharedRegions": [
+        "sidebar",
+        "topbar",
+        "main-frame"
+      ],
+      "privateRegions": [
+        "pageContent"
+      ],
+      "mutableSlots": [
+        "pageTitle",
+        "pageActions",
+        "pageContent"
+      ],
+      "status": "generated",
+      "children": []
+    },
+    {
+      "nodeId": "page-field-mapping",
+      "kind": "page-leaf",
+      "pageIds": [
+        "page-field-mapping"
+      ],
+      "output": "pages/field-mapping.html",
+      "sharedRegions": [
+        "sidebar",
+        "topbar",
+        "main-frame"
+      ],
+      "privateRegions": [
+        "pageContent"
+      ],
+      "mutableSlots": [
+        "pageTitle",
+        "pageActions",
+        "pageContent"
+      ],
+      "status": "generated",
+      "children": []
+    },
+    {
+      "nodeId": "page-datasets",
+      "kind": "page-leaf",
+      "pageIds": [
+        "page-datasets"
+      ],
+      "output": "pages/datasets.html",
+      "sharedRegions": [
+        "sidebar",
+        "topbar",
+        "main-frame"
+      ],
+      "privateRegions": [
+        "pageContent"
+      ],
+      "mutableSlots": [
+        "pageTitle",
+        "pageActions",
+        "pageContent"
+      ],
+      "status": "generated",
+      "children": []
+    },
+    {
+      "nodeId": "page-runs",
+      "kind": "page-leaf",
+      "pageIds": [
+        "page-runs"
+      ],
+      "output": "pages/runs.html",
+      "sharedRegions": [
+        "sidebar",
+        "topbar",
+        "main-frame"
+      ],
+      "privateRegions": [
+        "pageContent"
+      ],
+      "mutableSlots": [
+        "pageTitle",
+        "pageActions",
+        "pageContent"
+      ],
+      "status": "generated",
+      "children": []
+    },
+    {
+      "nodeId": "page-servers",
+      "kind": "page-leaf",
+      "pageIds": [
+        "page-servers"
+      ],
+      "output": "pages/servers.html",
+      "sharedRegions": [
+        "sidebar",
+        "topbar",
+        "main-frame"
+      ],
+      "privateRegions": [
+        "pageContent"
+      ],
+      "mutableSlots": [
+        "pageTitle",
+        "pageActions",
+        "pageContent"
+      ],
+      "status": "generated",
+      "children": []
+    },
+    {
+      "nodeId": "page-settings",
+      "kind": "page-leaf",
+      "pageIds": [
+        "page-settings"
+      ],
+      "output": "pages/settings.html",
+      "sharedRegions": [
+        "sidebar",
+        "topbar",
+        "main-frame"
+      ],
+      "privateRegions": [
+        "pageContent"
+      ],
+      "mutableSlots": [
+        "pageTitle",
+        "pageActions",
+        "pageContent"
+      ],
+      "status": "generated",
+      "children": []
+    }
+  ]
+}

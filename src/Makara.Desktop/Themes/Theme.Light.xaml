@@ -1,0 +1,52 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- ============================================================
+         Makara 设计令牌 — 浅色主题
+         对应 makara-wpf-ui/colors_and_type.css (.light)
+         ============================================================ -->
+
+    <Color x:Key="MkBackgroundC">#F8FAFC</Color>
+    <Color x:Key="MkSurfaceC">#FFFFFF</Color>
+    <Color x:Key="MkSurface2C">#F1F5F9</Color>
+    <Color x:Key="MkSurface3C">#E2E8F0</Color>
+    <Color x:Key="MkPrimaryC">#00A8C6</Color>
+    <Color x:Key="MkPrimaryForegroundC">#FFFFFF</Color>
+    <Color x:Key="MkBorderC">#E2E8F0</Color>
+    <Color x:Key="MkTextPrimaryC">#0F172A</Color>
+    <Color x:Key="MkTextSecondaryC">#475569</Color>
+    <Color x:Key="MkTextTertiaryC">#64748B</Color>
+    <Color x:Key="MkSuccessC">#10B981</Color>
+    <Color x:Key="MkWarningC">#F59E0B</Color>
+    <Color x:Key="MkErrorC">#EF4444</Color>
+    <Color x:Key="MkInfoC">#3B82F6</Color>
+
+    <SolidColorBrush x:Key="MkBackground" Color="{StaticResource MkBackgroundC}"/>
+    <SolidColorBrush x:Key="MkSurface" Color="{StaticResource MkSurfaceC}"/>
+    <SolidColorBrush x:Key="MkSurface2" Color="{StaticResource MkSurface2C}"/>
+    <SolidColorBrush x:Key="MkSurface3" Color="{StaticResource MkSurface3C}"/>
+    <SolidColorBrush x:Key="MkPrimary" Color="{StaticResource MkPrimaryC}"/>
+    <SolidColorBrush x:Key="MkPrimaryForeground" Color="{StaticResource MkPrimaryForegroundC}"/>
+    <SolidColorBrush x:Key="MkPrimarySoft" Color="#2600A8C6"/>
+    <SolidColorBrush x:Key="MkSuccessSoft" Color="#2610B981"/>
+    <SolidColorBrush x:Key="MkWarningSoft" Color="#26F59E0B"/>
+    <SolidColorBrush x:Key="MkErrorSoft" Color="#26EF4444"/>
+    <SolidColorBrush x:Key="MkInfoSoft" Color="#263B82F6"/>
+    <SolidColorBrush x:Key="MkBorder" Color="{StaticResource MkBorderC}"/>
+    <SolidColorBrush x:Key="MkTextPrimary" Color="{StaticResource MkTextPrimaryC}"/>
+    <SolidColorBrush x:Key="MkTextSecondary" Color="{StaticResource MkTextSecondaryC}"/>
+    <SolidColorBrush x:Key="MkTextTertiary" Color="{StaticResource MkTextTertiaryC}"/>
+    <SolidColorBrush x:Key="MkSuccess" Color="{StaticResource MkSuccessC}"/>
+    <SolidColorBrush x:Key="MkWarning" Color="{StaticResource MkWarningC}"/>
+    <SolidColorBrush x:Key="MkError" Color="{StaticResource MkErrorC}"/>
+    <SolidColorBrush x:Key="MkInfo" Color="{StaticResource MkInfoC}"/>
+
+    <!-- 兼容旧视图的别名 -->
+    <SolidColorBrush x:Key="BgPrimaryBrush" Color="{StaticResource MkBackgroundC}"/>
+    <SolidColorBrush x:Key="BgSecondaryBrush" Color="{StaticResource MkSurface2C}"/>
+    <SolidColorBrush x:Key="BgCardBrush" Color="{StaticResource MkSurfaceC}"/>
+    <SolidColorBrush x:Key="AccentPrimaryBrush" Color="{StaticResource MkPrimaryC}"/>
+    <SolidColorBrush x:Key="AccentSecondaryBrush" Color="{StaticResource MkPrimaryC}"/>
+    <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource MkTextPrimaryC}"/>
+    <SolidColorBrush x:Key="TextSecondaryBrush" Color="{StaticResource MkTextSecondaryC}"/>
+    <SolidColorBrush x:Key="BorderPrimaryBrush" Color="{StaticResource MkBorderC}"/>
+</ResourceDictionary>
