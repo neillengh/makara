@@ -39,6 +39,10 @@ builder.Services.AddScoped<IWorkflowService, WorkflowService>();
 builder.Services.AddScoped<IEtlService, EtlService>();
 builder.Services.AddScoped<IWorkflowEngine, WorkflowEngine>();
 
+// Scheduler (singleton + hosted service)
+builder.Services.AddSingleton<WorkflowSchedulerService>();
+builder.Services.AddHostedService(sp => sp.GetRequiredService<WorkflowSchedulerService>());
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
