@@ -1,6 +1,7 @@
 using Makara.Core.Interfaces;
 using Makara.Core.Models;
 using Makara.Infrastructure.Data;
+using Makara.Infrastructure.DataSourceProviders;
 using Makara.Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,6 +17,10 @@ public static class DependencyInjection
         services.AddScoped<IRepository<DataSource>, FreeSqlRepository<DataSource>>();
         services.AddScoped<IRepository<Workflow>, FreeSqlRepository<Workflow>>();
         services.AddScoped<IRepository<WorkflowRun>, FreeSqlRepository<WorkflowRun>>();
+
+        services.AddScoped<SqlServerProvider>();
+        services.AddScoped<MySqlProvider>();
+        services.AddScoped<DataSourceProviderFactory>();
 
         return services;
     }

@@ -1,15 +1,18 @@
 using Makara.Core.Interfaces;
 using Makara.Core.Models;
+using Makara.Infrastructure.DataSourceProviders;
 
 namespace Makara.Server.Services;
 
 public class DataSourceService : IDataSourceService
 {
     private readonly IRepository<DataSource> _repo;
+    private readonly DataSourceProviderFactory _providerFactory;
 
-    public DataSourceService(IRepository<DataSource> repo)
+    public DataSourceService(IRepository<DataSource> repo, DataSourceProviderFactory providerFactory)
     {
         _repo = repo;
+        _providerFactory = providerFactory;
     }
 
     public async Task<IEnumerable<DataSource>> ListAsync() =>
@@ -33,8 +36,9 @@ public class DataSourceService : IDataSourceService
 
     public async Task<bool> TestConnectionAsync(DataSource dataSource)
     {
-        // TODO: 实现实际连接测试
-        await Task.Delay(100);
-        return true;
+        var provider = _providerFactory.GetProvider(dataSource.Type);
+        if (provider is null)
+            return false;
+        return await provider.TestConnectionAsync(dataSource);
     }
 }
