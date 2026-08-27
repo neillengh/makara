@@ -12,6 +12,9 @@ public class WorkflowRun
     public DateTime StartedAt { get; set; } = DateTime.UtcNow;
     public DateTime? FinishedAt { get; set; }
     public List<RunLog> Logs { get; set; } = [];
+
+    /// <summary>日志集合的 JSON 持久化（FreeSql 3.5 不支持 List&lt;T&gt; 直接 JSON 映射，故手动序列化到此字符串列）。</summary>
+    public string? LogsJson { get; set; }
 }
 
 public class RunLog

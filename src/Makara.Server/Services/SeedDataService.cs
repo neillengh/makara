@@ -121,76 +121,81 @@ public static class SeedDataService
     {
         if (await fsql.Select<Workflow>().AnyAsync()) return;
 
-        await fsql.Insert<Workflow>().AppendData([
-            new Workflow
-            {
-                Id = "wf_001",
-                Name = "订单微调数据集管线",
-                Description = "从生产订单库拉取 -> 清洗 -> 字段映射 -> 构建 Jsonl 训练集",
-                CronExpression = "0 3 * * *",
-                Status = WorkflowStatus.Ready,
-                Nodes =
+        // 用 BuildWorkflow 同时填充内存集合与持久化的 *Json 字符串列，避免重复定义节点/边。
+        List<Workflow> workflows =
+        [
+            BuildWorkflow(
+                "wf_001", "订单微调数据集管线",
+                "从生产订单库拉取 -> 清洗 -> 字段映射 -> 构建 Jsonl 训练集",
+                "0 3 * * *", WorkflowStatus.Ready,
+                DateTime.UtcNow.AddDays(-35), DateTime.UtcNow.AddDays(-4),
                 [
                     new WorkflowNode { Id = "n1", Type = nameof(NodeType.DataSource), Label = "数据源：订单库", X = 80, Y = 120, Config = new Dictionary<string, object> { ["dataSourceId"] = "ds_001" } },
                     new WorkflowNode { Id = "n2", Type = nameof(NodeType.DataClean), Label = "清洗-去重补全", X = 340, Y = 120, Config = new Dictionary<string, object> { ["dedupe"] = true, ["fillna"] = true } },
                     new WorkflowNode { Id = "n3", Type = nameof(NodeType.FieldMap), Label = "字段映射", X = 600, Y = 120, Config = new Dictionary<string, object> { ["mappingId"] = "fm_001" } },
                     new WorkflowNode { Id = "n4", Type = nameof(NodeType.DatasetBuild), Label = "构建 Jsonl 数据集", X = 860, Y = 120, Config = new Dictionary<string, object> { ["format"] = "Jsonl", ["outputDir"] = "./output/orders-v2.3" } }
                 ],
-                Edges =
                 [
                     new WorkflowEdge { Id = "e1", SourceNodeId = "n1", TargetNodeId = "n2" },
                     new WorkflowEdge { Id = "e2", SourceNodeId = "n2", TargetNodeId = "n3" },
                     new WorkflowEdge { Id = "e3", SourceNodeId = "n3", TargetNodeId = "n4" }
-                ],
-                CreatedAt = DateTime.UtcNow.AddDays(-35),
-                UpdatedAt = DateTime.UtcNow.AddDays(-4)
-            },
-            new Workflow
-            {
-                Id = "wf_002",
-                Name = "客户画像构建流程",
-                Description = "从 SQL Server CRM 构建客户画像训练集",
-                CronExpression = "30 1 * * 1",
-                Status = WorkflowStatus.Running,
-                Nodes =
+                ]),
+            BuildWorkflow(
+                "wf_002", "客户画像构建流程",
+                "从 SQL Server CRM 构建客户画像训练集",
+                "30 1 * * 1", WorkflowStatus.Running,
+                DateTime.UtcNow.AddDays(-18), DateTime.UtcNow.AddHours(-1),
                 [
                     new WorkflowNode { Id = "n1", Type = nameof(NodeType.DataSource), Label = "数据源：CRM", X = 80, Y = 150, Config = new Dictionary<string, object> { ["dataSourceId"] = "ds_002" } },
                     new WorkflowNode { Id = "n2", Type = nameof(NodeType.DataClean), Label = "清洗-打标签", X = 340, Y = 150 },
                     new WorkflowNode { Id = "n3", Type = nameof(NodeType.QualityCheck), Label = "质检", X = 600, Y = 150 },
                     new WorkflowNode { Id = "n4", Type = nameof(NodeType.DatasetBuild), Label = "构建 Parquet 训练集", X = 860, Y = 150 }
                 ],
-                Edges =
                 [
                     new WorkflowEdge { Id = "e1", SourceNodeId = "n1", TargetNodeId = "n2" },
                     new WorkflowEdge { Id = "e2", SourceNodeId = "n2", TargetNodeId = "n3" },
                     new WorkflowEdge { Id = "e3", SourceNodeId = "n3", TargetNodeId = "n4" }
-                ],
-                CreatedAt = DateTime.UtcNow.AddDays(-18),
-                UpdatedAt = DateTime.UtcNow.AddHours(-1)
-            },
-            new Workflow
-            {
-                Id = "wf_003",
-                Name = "原始对话清洗 Demo",
-                Description = "CSV 对话数据 -> 清洗 -> 字段映射 -> Jsonl",
-                Status = WorkflowStatus.Draft,
-                Nodes =
+                ]),
+            BuildWorkflow(
+                "wf_003", "原始对话清洗 Demo",
+                "CSV 对话数据 -> 清洗 -> 字段映射 -> Jsonl",
+                null, WorkflowStatus.Draft,
+                DateTime.UtcNow.AddDays(-8), DateTime.UtcNow.AddDays(-1),
                 [
                     new WorkflowNode { Id = "n1", Type = nameof(NodeType.DataSource), Label = "数据源：对话CSV", X = 80, Y = 180, Config = new Dictionary<string, object> { ["dataSourceId"] = "ds_003" } },
                     new WorkflowNode { Id = "n2", Type = nameof(NodeType.DataClean), Label = "清洗-短对话过滤", X = 340, Y = 180 },
                     new WorkflowNode { Id = "n3", Type = nameof(NodeType.FieldMap), Label = "字段映射", X = 600, Y = 180, Config = new Dictionary<string, object> { ["mappingId"] = "fm_003" } },
                     new WorkflowNode { Id = "n4", Type = nameof(NodeType.DatasetBuild), Label = "输出 Jsonl", X = 860, Y = 180 }
                 ],
-                Edges =
                 [
                     new WorkflowEdge { Id = "e1", SourceNodeId = "n1", TargetNodeId = "n2" },
                     new WorkflowEdge { Id = "e2", SourceNodeId = "n2", TargetNodeId = "n3" },
                     new WorkflowEdge { Id = "e3", SourceNodeId = "n3", TargetNodeId = "n4" }
-                ],
-                CreatedAt = DateTime.UtcNow.AddDays(-8),
-                UpdatedAt = DateTime.UtcNow.AddDays(-1)
-            }
-        ]).ExecuteAffrowsAsync();
+                ])
+        ];
+
+        await fsql.Insert<Workflow>().AppendData(workflows).ExecuteAffrowsAsync();
+    }
+
+    private static Workflow BuildWorkflow(
+        string id, string name, string description, string? cron, WorkflowStatus status,
+        DateTime createdAt, DateTime updatedAt,
+        List<WorkflowNode> nodes, List<WorkflowEdge> edges)
+    {
+        return new Workflow
+        {
+            Id = id,
+            Name = name,
+            Description = description,
+            CronExpression = cron,
+            Status = status,
+            Nodes = nodes,
+            Edges = edges,
+            NodesJson = JsonSerializer.Serialize(nodes),
+            EdgesJson = JsonSerializer.Serialize(edges),
+            CreatedAt = createdAt,
+            UpdatedAt = updatedAt
+        };
     }
 
     private static async Task EnsureWorkflowRuns(IFreeSql fsql)
@@ -198,6 +203,17 @@ public static class SeedDataService
         if (await fsql.Select<WorkflowRun>().AnyAsync()) return;
 
         var now = DateTime.UtcNow;
+
+        // 运行日志（仅成功示例写入，验证 Logs 持久化到 LogsJson 字符串列）
+        var success1Logs = new List<RunLog>
+        {
+            new RunLog { RunId = "run_new_success1", Level = "info", Message = "工作流 订单微调数据集管线 开始执行", NodeId = "n1" },
+            new RunLog { RunId = "run_new_success1", Level = "info", Message = "节点 数据源：订单库 执行完成", NodeId = "n1" },
+            new RunLog { RunId = "run_new_success1", Level = "info", Message = "节点 清洗-去重补全 执行完成", NodeId = "n2" },
+            new RunLog { RunId = "run_new_success1", Level = "info", Message = "节点 字段映射 执行完成", NodeId = "n3" },
+            new RunLog { RunId = "run_new_success1", Level = "info", Message = "工作流执行完成：共 12450 条样本", NodeId = "n4" }
+        };
+
         var runs = new List<WorkflowRun>
         {
             // 最近 4 条
@@ -207,14 +223,8 @@ public static class SeedDataService
                 CurrentNode = "构建 Jsonl 数据集",
                 Result = JsonSerializer.Serialize(new { datasetId = "ds_info_001", totalSamples = 12450 }),
                 StartedAt = now.AddHours(-6), FinishedAt = now.AddHours(-5).AddMinutes(42),
-                Logs =
-                [
-                    new RunLog { RunId = "run_new_success1", Level = "info", Message = "工作流 订单微调数据集管线 开始执行", NodeId = "n1" },
-                    new RunLog { RunId = "run_new_success1", Level = "info", Message = "节点 数据源：订单库 执行完成", NodeId = "n1" },
-                    new RunLog { RunId = "run_new_success1", Level = "info", Message = "节点 清洗-去重补全 执行完成", NodeId = "n2" },
-                    new RunLog { RunId = "run_new_success1", Level = "info", Message = "节点 字段映射 执行完成", NodeId = "n3" },
-                    new RunLog { RunId = "run_new_success1", Level = "info", Message = "工作流执行完成：共 12450 条样本", NodeId = "n4" }
-                ]
+                Logs = success1Logs,
+                LogsJson = JsonSerializer.Serialize(success1Logs)
             },
             new()
             {

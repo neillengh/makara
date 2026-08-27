@@ -11,6 +11,12 @@ public class Workflow
     public WorkflowStatus Status { get; set; } = WorkflowStatus.Draft;
     public List<WorkflowNode> Nodes { get; set; } = [];
     public List<WorkflowEdge> Edges { get; set; } = [];
+
+    /// <summary>节点集合的 JSON 持久化（FreeSql 3.5 不支持 List&lt;T&gt; 直接 JSON 映射，故手动序列化到此字符串列）。</summary>
+    public string? NodesJson { get; set; }
+    /// <summary>边集合的 JSON 持久化。</summary>
+    public string? EdgesJson { get; set; }
+
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 }

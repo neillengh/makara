@@ -19,19 +19,32 @@ public class WorkflowService : IWorkflowService
         _engine = engine;
     }
 
-    public async Task<IEnumerable<Workflow>> ListAsync() =>
-        await _repo.GetAllAsync();
+    public async Task<IEnumerable<Workflow>> ListAsync()
+    {
+        var list = await _repo.GetAllAsync();
+        foreach (var wf in list) GraphJsonColumns.Hydrate(wf);
+        return list;
+    }
 
-    public async Task<Workflow?> GetAsync(string id) =>
-        await _repo.GetByIdAsync(id);
+    public async Task<Workflow?> GetAsync(string id)
+    {
+        var wf = await _repo.GetByIdAsync(id);
+        if (wf is not null) GraphJsonColumns.Hydrate(wf);
+        return wf;
+    }
 
-    public async Task<Workflow> CreateAsync(Workflow workflow) =>
-        await _repo.InsertAsync(workflow);
+    public async Task<Workflow> CreateAsync(Workflow workflow)
+    {
+        workflow.UpdatedAt = DateTime.UtcNow;
+        GraphJsonColumns.Dehydrate(workflow);
+        return await _repo.InsertAsync(workflow);
+    }
 
     public async Task<Workflow> UpdateAsync(string id, Workflow workflow)
     {
         workflow.Id = id;
         workflow.UpdatedAt = DateTime.UtcNow;
+        GraphJsonColumns.Dehydrate(workflow);
         return await _repo.UpdateAsync(workflow);
     }
 
@@ -42,18 +55,27 @@ public class WorkflowService : IWorkflowService
     {
         var workflow = await _repo.GetByIdAsync(workflowId)
             ?? throw new InvalidOperationException("工作流不存在");
+        GraphJsonColumns.Hydrate(workflow);
 
         return await _engine.RunAsync(workflow);
     }
 
-    public async Task<WorkflowRun?> GetRunStatusAsync(string runId) =>
-        await _runRepo.GetByIdAsync(runId);
+    public async Task<WorkflowRun?> GetRunStatusAsync(string runId)
+    {
+        var run = await _runRepo.GetByIdAsync(runId);
+        if (run is not null) GraphJsonColumns.Hydrate(run);
+        return run;
+    }
 
-    public async Task<List<WorkflowRun>> ListRunsAsync(int take = 100) =>
-        await _runRepo.GetAllAsync(
+    public async Task<List<WorkflowRun>> ListRunsAsync(int take = 100)
+    {
+        var runs = await _runRepo.GetAllAsync(
             predicate: null,
             skip: 0,
             take: Math.Clamp(take, 1, 500),
             orderByKey: nameof(WorkflowRun.StartedAt),
             descending: true);
+        foreach (var r in runs) GraphJsonColumns.Hydrate(r);
+        return runs;
+    }
 }

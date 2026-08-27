@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Makara.Core.Interfaces;
 using Makara.Core.Models;
 using Makara.Server.Services;
@@ -124,6 +125,7 @@ public class WorkflowEngine : IWorkflowEngine
             run.Status = "succeeded";
             run.Progress = 100;
             run.Logs = logs;
+            run.LogsJson = JsonSerializer.Serialize(logs, GraphJsonColumns.JsonOptions);
             run.FinishedAt = DateTime.UtcNow;
             await _runRepo.UpdateAsync(run);
 
@@ -134,6 +136,7 @@ public class WorkflowEngine : IWorkflowEngine
             run.Status = "failed";
             run.Error = ex.Message;
             run.Logs = logs;
+            run.LogsJson = JsonSerializer.Serialize(logs, GraphJsonColumns.JsonOptions);
             run.FinishedAt = DateTime.UtcNow;
             await _runRepo.UpdateAsync(run);
 
