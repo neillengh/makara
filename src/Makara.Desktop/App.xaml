@@ -1,8 +1,7 @@
 <Application x:Class="Makara.Desktop.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Makara.Desktop"
-             StartupUri="MainWindow.xaml">
+             xmlns:local="clr-namespace:Makara.Desktop">
     <Application.Resources>
         <!-- 颜色 -->
         <Color x:Key="BgPrimary">#1A1A2E</Color>
@@ -37,8 +36,10 @@
             <Setter Property="Background" Value="{StaticResource BgSecondaryBrush}"/>
             <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
             <Setter Property="BorderBrush" Value="{StaticResource BorderPrimaryBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Padding" Value="8,6"/>
             <Setter Property="FontSize" Value="14"/>
+            <Setter Property="CaretBrush" Value="{StaticResource AccentSecondaryBrush}"/>
         </Style>
 
         <Style TargetType="Button">
@@ -48,6 +49,30 @@
             <Setter Property="Padding" Value="20,8"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="4" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="ComboBox">
+            <Setter Property="Background" Value="{StaticResource BgSecondaryBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderPrimaryBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="8,6"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <Style TargetType="ProgressBar">
+            <Setter Property="Background" Value="{StaticResource BgSecondaryBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource AccentSecondaryBrush}"/>
+            <Setter Property="Height" Value="6"/>
         </Style>
     </Application.Resources>
 </Application>

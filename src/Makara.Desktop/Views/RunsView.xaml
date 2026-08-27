@@ -1,0 +1,69 @@
+<UserControl x:Class="Makara.Desktop.Views.RunsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d">
+    <Grid Margin="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- 标题栏 -->
+        <Border Grid.Row="0" Background="{StaticResource BgCardBrush}" Padding="20,12" CornerRadius="0,0,8,8" Margin="0,0,0,12">
+            <TextBlock Text="执行记录" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
+        </Border>
+
+        <!-- 订阅控制区 -->
+        <Border Grid.Row="1" Background="{StaticResource BgCardBrush}" CornerRadius="8" Padding="16,12" Margin="0,0,0,12">
+            <StackPanel>
+                <DockPanel Margin="0,0,0,12">
+                    <TextBlock Text="运行ID" VerticalAlignment="Center" Margin="0,0,8,0" FontSize="13"/>
+                    <TextBox Text="{Binding RunId, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Left" MinWidth="200" Margin="0,0,8,0"/>
+                    <Button Content="订阅" Command="{Binding SubscribeCommand}" DockPanel.Dock="Left" Padding="16,6" Margin="0,0,8,0"/>
+                    <Button Content="断开" Command="{Binding UnsubscribeCommand}" DockPanel.Dock="Left" Padding="16,6" Background="#555"/>
+                </DockPanel>
+
+                <DockPanel Margin="0,0,0,8">
+                    <TextBlock Text="{Binding Status}" VerticalAlignment="Center" FontSize="13" Foreground="{StaticResource AccentSecondaryBrush}" Margin="0,0,16,0"/>
+                    <TextBlock Text="{Binding CurrentNode}" VerticalAlignment="Center" FontSize="13" Foreground="{StaticResource TextSecondaryBrush}"/>
+                </DockPanel>
+
+                <DockPanel>
+                    <TextBlock Text="{Binding Progress, StringFormat={}{0:0}%}" VerticalAlignment="Center" Margin="0,0,8,0" FontSize="13"/>
+                    <ProgressBar Value="{Binding Progress}" Maximum="100" Height="6" Background="{StaticResource BgSecondaryBrush}" Foreground="{StaticResource AccentSecondaryBrush}"/>
+                </DockPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- 事件日志 -->
+        <Border Grid.Row="2" Background="{StaticResource BgCardBrush}" CornerRadius="8">
+            <DockPanel>
+                <TextBlock Text="事件日志" DockPanel.Dock="Top" Margin="16,12" FontSize="14" Foreground="{StaticResource TextSecondaryBrush}"/>
+                <ListView ItemsSource="{Binding Events}" Background="Transparent" BorderThickness="0" Margin="8" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="{StaticResource BgSecondaryBrush}" CornerRadius="4" Padding="10,8" Margin="0,2">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Timestamp, StringFormat=HH:mm:ss}" FontSize="11"
+                                               Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Type}" FontSize="11" FontWeight="SemiBold"
+                                               Foreground="{StaticResource AccentSecondaryBrush}" Margin="0,0,10,0" VerticalAlignment="Center" MinWidth="80"/>
+                                    <TextBlock Text="{Binding Message}" FontSize="12" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="Padding" Value="0"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+            </DockPanel>
+        </Border>
+    </Grid>
+</UserControl>

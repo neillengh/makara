@@ -5,12 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:Makara.Desktop.ViewModels"
         mc:Ignorable="d"
-        Title="Makara · 摩羯" Height="600" Width="1000"
+        Title="Makara · 摩羯" Height="700" Width="1200"
         WindowStartupLocation="CenterScreen"
-        Background="#1A1A2E">
-    <Window.DataContext>
-        <vm:MainViewModel/>
-    </Window.DataContext>
+        Background="{StaticResource BgPrimaryBrush}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
@@ -18,47 +15,57 @@
         </Grid.ColumnDefinitions>
 
         <!-- 左侧导航栏 -->
-        <Border Grid.Column="0" Background="#16213E" CornerRadius="0">
-            <StackPanel Margin="0,20,0,0">
-                <TextBlock Text="Makara" FontSize="24" FontWeight="Bold" Foreground="#E94560"
-                           HorizontalAlignment="Center" Margin="0,0,0,30"/>
+        <Border Grid.Column="0" Background="{StaticResource BgSecondaryBrush}">
+            <StackPanel Margin="0,24,0,0">
+                <!-- Logo -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,32">
+                    <TextBlock Text="Makara" FontSize="22" FontWeight="Bold" Foreground="{StaticResource AccentPrimaryBrush}"/>
+                </StackPanel>
+
+                <!-- 导航按钮 -->
                 <Button Content="工作流" Command="{Binding NavigateCommand}" CommandParameter="workflows"
-                        Style="{StaticResource NavButtonStyle}" Margin="10,5"/>
+                        Style="{StaticResource NavButtonStyle}" Margin="8,2" Tag="workflows"/>
                 <Button Content="数据源" Command="{Binding NavigateCommand}" CommandParameter="datasources"
-                        Style="{StaticResource NavButtonStyle}" Margin="10,5"/>
+                        Style="{StaticResource NavButtonStyle}" Margin="8,2" Tag="datasources"/>
                 <Button Content="数据集" Command="{Binding NavigateCommand}" CommandParameter="datasets"
-                        Style="{StaticResource NavButtonStyle}" Margin="10,5"/>
+                        Style="{StaticResource NavButtonStyle}" Margin="8,2" Tag="datasets"/>
                 <Button Content="执行记录" Command="{Binding NavigateCommand}" CommandParameter="runs"
-                        Style="{StaticResource NavButtonStyle}" Margin="10,5"/>
+                        Style="{StaticResource NavButtonStyle}" Margin="8,2" Tag="runs"/>
                 <Button Content="设置" Command="{Binding NavigateCommand}" CommandParameter="settings"
-                        Style="{StaticResource NavButtonStyle}" Margin="10,5"/>
+                        Style="{StaticResource NavButtonStyle}" Margin="8,2" Tag="settings"/>
+
+                <!-- 底部版本信息 -->
+                <TextBlock Text="v0.1.0 · MVP" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"
+                           HorizontalAlignment="Center" Margin="0,0,0,16" VerticalAlignment="Bottom"/>
             </StackPanel>
         </Border>
 
         <!-- 右侧主内容 -->
-        <Grid Grid.Column="1" Margin="20">
-            <ContentControl Content="{Binding CurrentPage}"/>
+        <Grid Grid.Column="1" Margin="16">
+            <ContentControl Content="{Binding CurrentView}"/>
         </Grid>
     </Grid>
 
     <Window.Resources>
         <Style x:Key="NavButtonStyle" TargetType="Button">
-            <Setter Property="Height" Value="40"/>
+            <Setter Property="Height" Value="38"/>
             <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="#A0A0B0"/>
+            <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Padding" Value="16,0"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="border" Background="Transparent" CornerRadius="5" Padding="15,0">
+                        <Border x:Name="border" Background="Transparent" CornerRadius="6" Padding="{TemplateBinding Padding}">
                             <ContentPresenter VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#1A1A2E"/>
+                                <Setter TargetName="border" Property="Background" Value="#1E2A4A"/>
+                                <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>

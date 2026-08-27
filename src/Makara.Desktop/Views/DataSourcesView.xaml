@@ -1,0 +1,94 @@
+<UserControl x:Class="Makara.Desktop.Views.DataSourcesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:enums="clr-namespace:Makara.Core.Enums;assembly=Makara.Core"
+             mc:Ignorable="d">
+    <Grid Margin="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- 标题栏 -->
+        <Border Grid.Row="0" Background="{StaticResource BgCardBrush}" Padding="20,12" CornerRadius="0,0,8,8" Margin="0,0,0,12">
+            <DockPanel>
+                <TextBlock Text="数据源管理" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding StatusMessage}" Foreground="{StaticResource AccentSecondaryBrush}"
+                           VerticalAlignment="Center" Margin="20,0,0,0" FontSize="13"/>
+                <Button Content="刷新" Command="{Binding LoadCommand}" DockPanel.Dock="Right"
+                        HorizontalAlignment="Right" Padding="16,6"/>
+            </DockPanel>
+        </Border>
+
+        <!-- 主内容区 -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" MinWidth="300"/>
+                <ColumnDefinition Width="360"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- 数据源列表 -->
+            <Border Grid.Column="0" Background="{StaticResource BgCardBrush}" CornerRadius="8" Margin="0,0,8,0">
+                <DockPanel>
+                    <TextBlock Text="已有数据源" DockPanel.Dock="Top" Margin="16,12" FontSize="14" Foreground="{StaticResource TextSecondaryBrush}"/>
+                    <ListView ItemsSource="{Binding DataSources}" SelectedItem="{Binding SelectedDataSource}"
+                              Background="Transparent" BorderThickness="0" Margin="8" Padding="0">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="{StaticResource BgSecondaryBrush}" CornerRadius="6" Padding="12,10" Margin="0,2">
+                                    <DockPanel>
+                                        <StackPanel DockPanel.Dock="Right" VerticalAlignment="Center">
+                                            <Button Content="删除" Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                                    CommandParameter="{Binding}" FontSize="11" Padding="10,4" Background="#E94560"/>
+                                        </StackPanel>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Name}" FontSize="14" FontWeight="SemiBold"/>
+                                            <TextBlock Text="{Binding Type}" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,2,0,0"/>
+                                        </StackPanel>
+                                    </DockPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="Margin" Value="0"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                    </ListView>
+                </DockPanel>
+            </Border>
+
+            <!-- 新建数据源表单 -->
+            <Border Grid.Column="1" Background="{StaticResource BgCardBrush}" CornerRadius="8">
+                <StackPanel Margin="20">
+                    <TextBlock Text="新建数据源" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,16"/>
+
+                    <TextBlock Text="名称" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,4"/>
+                    <TextBox Text="{Binding NewName, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,12"/>
+
+                    <TextBlock Text="类型" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,4"/>
+                    <ComboBox ItemsSource="{Binding DataSourceTypes}" SelectedItem="{Binding NewType}"
+                              Background="{StaticResource BgSecondaryBrush}" Foreground="{StaticResource TextPrimaryBrush}"
+                              Margin="0,0,0,12" Padding="8,6"/>
+
+                    <TextBlock Text="连接字符串" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,4"/>
+                    <TextBox Text="{Binding NewConnectionString, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,0,0,12" AcceptsReturn="True" TextWrapping="Wrap" MinHeight="60"/>
+
+                    <TextBlock Text="查询语句（可选）" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,4"/>
+                    <TextBox Text="{Binding NewQuery, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,0,0,16" AcceptsReturn="True" TextWrapping="Wrap" MinHeight="60"/>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                        <Button Content="测试连接" Command="{Binding TestConnectionCommand}" Margin="0,0,8,0" Padding="16,8"/>
+                        <Button Content="创建" Command="{Binding CreateCommand}" Padding="24,8"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

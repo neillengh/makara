@@ -1,6 +1,8 @@
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text.Json;
+using Makara.Core.Models;
 
 namespace Makara.Desktop.Services;
 
@@ -10,7 +12,9 @@ public class SseClient
 
     public string BaseUrl { get; set; } = "http://localhost:5000";
 
-    public event Action<string>? OnMessage;
+    public event Action<WorkflowEvent>? OnEvent;
+
+    private CancellationTokenSource? _cts;
 
     public SseClient()
     {
@@ -20,18 +24,31 @@ public class SseClient
 
     public async Task SubscribeAsync(string runId, CancellationToken cancellationToken = default)
     {
-        using var stream = await _http.GetStreamAsync($"api/tasks/{runId}/stream", cancellationToken);
+        _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+
+        using var stream = await _http.GetStreamAsync($"api/tasks/{runId}/stream", _cts.Token);
         using var reader = new StreamReader(stream);
 
-        while (!cancellationToken.IsCancellationRequested)
+        while (!_cts.Token.IsCancellationRequested)
         {
-            var line = await reader.ReadLineAsync(cancellationToken);
+            var line = await reader.ReadLineAsync(_cts.Token);
             if (line == null) break;
             if (line.StartsWith("data: "))
             {
-                var data = line["data: ".Length..];
-                OnMessage?.Invoke(data);
+                var json = line["data: ".Length..];
+                try
+                {
+                    var evt = JsonSerializer.Deserialize<WorkflowEvent>(json);
+                    if (evt != null)
+                        OnEvent?.Invoke(evt);
+                }
+                catch { }
             }
         }
+    }
+
+    public void Unsubscribe()
+    {
+        _cts?.Cancel();
     }
 }

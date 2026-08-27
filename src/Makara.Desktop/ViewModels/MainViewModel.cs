@@ -1,59 +1,46 @@
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
+using System.Windows.Controls;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Makara.Desktop.Services;
+using Makara.Desktop.Views;
 
 namespace Makara.Desktop.ViewModels;
 
-public class MainViewModel : INotifyPropertyChanged
+public partial class MainViewModel : ObservableObject
 {
-    private string _currentPage = "工作流";
+    private readonly ApiClient _api;
+    private readonly SseClient _sse;
 
-    public string CurrentPage
+    [ObservableProperty]
+    private object? _currentView;
+
+    [ObservableProperty]
+    private string _currentPage = "workflows";
+
+    public MainViewModel(ApiClient api, SseClient sse)
     {
-        get => _currentPage;
-        set { _currentPage = value; OnPropertyChanged(); }
+        _api = api;
+        _sse = sse;
+        Navigate("workflows");
     }
 
-    public ICommand NavigateCommand { get; }
-
-    public MainViewModel()
+    [RelayCommand]
+    private void Navigate(string page)
     {
-        NavigateCommand = new RelayCommand(param =>
+        CurrentPage = page;
+        CurrentView = page switch
         {
-            if (param is string page)
-                CurrentPage = page switch
-                {
-                    "workflows" => "工作流",
-                    "datasources" => "数据源",
-                    "datasets" => "数据集",
-                    "runs" => "执行记录",
-                    "settings" => "设置",
-                    _ => page
-                };
-        });
-    }
-
-    public event PropertyChangedEventHandler? PropertyChanged;
-    protected void OnPropertyChanged([CallerMemberName] string? name = null) =>
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-}
-
-public class RelayCommand : ICommand
-{
-    private readonly Action<object?> _execute;
-    private readonly Func<object?, bool>? _canExecute;
-
-    public RelayCommand(Action<object?> execute, Func<object?, bool>? canExecute = null)
-    {
-        _execute = execute;
-        _canExecute = canExecute;
-    }
-
-    public bool CanExecute(object? parameter) => _canExecute?.Invoke(parameter) ?? true;
-    public void Execute(object? parameter) => _execute(parameter);
-    public event EventHandler? CanExecuteChanged
-    {
-        add => CommandManager.RequerySuggested += value;
-        remove => CommandManager.RequerySuggested -= value;
+            "workflows" => new WorkflowsView { DataContext = new WorkflowsViewModel(_api) },
+            "datasources" => new DataSourcesView { DataContext = new DataSourcesViewModel(_api) },
+            "runs" => new RunsView { DataContext = new RunsViewModel(_sse) },
+            _ => new TextBlock
+            {
+                Text = "敬请期待",
+                FontSize = 18,
+                HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
+                VerticalAlignment = System.Windows.VerticalAlignment.Center,
+                Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0xA0, 0xA0, 0xB0))
+            }
+        };
     }
 }
