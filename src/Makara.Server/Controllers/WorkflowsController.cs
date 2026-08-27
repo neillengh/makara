@@ -1,3 +1,4 @@
+using Makara.Core.Interfaces;
 using Makara.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -5,48 +6,51 @@ namespace Makara.Server.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class WorkflowsController : ControllerBase
+public class WorkflowsController(IWorkflowService service) : ControllerBase
 {
     [HttpGet]
-    public IActionResult List()
-    {
-        return Ok(new List<Workflow>());
-    }
+    public async Task<IActionResult> List() =>
+        Ok(await service.ListAsync());
 
     [HttpGet("{id}")]
-    public IActionResult Get(string id)
+    public async Task<IActionResult> Get(string id)
     {
-        return Ok(new { id });
+        var wf = await service.GetAsync(id);
+        return wf is null ? NotFound() : Ok(wf);
     }
 
     [HttpPost]
-    public IActionResult Create([FromBody] Workflow workflow)
+    public async Task<IActionResult> Create([FromBody] Workflow workflow)
     {
-        return CreatedAtAction(nameof(Get), new { id = workflow.Id }, workflow);
+        var created = await service.CreateAsync(workflow);
+        return CreatedAtAction(nameof(Get), new { id = created.Id }, created);
     }
 
     [HttpPut("{id}")]
-    public IActionResult Update(string id, [FromBody] Workflow workflow)
+    public async Task<IActionResult> Update(string id, [FromBody] Workflow workflow)
     {
+        await service.UpdateAsync(id, workflow);
         return NoContent();
     }
 
     [HttpDelete("{id}")]
-    public IActionResult Delete(string id)
+    public async Task<IActionResult> Delete(string id)
     {
+        await service.DeleteAsync(id);
         return NoContent();
     }
 
     [HttpPost("{id}/run")]
-    public IActionResult Run(string id)
+    public async Task<IActionResult> Run(string id)
     {
-        var runId = Guid.NewGuid().ToString("N");
+        var runId = await service.RunAsync(id);
         return Ok(new { runId, workflowId = id, status = "queued" });
     }
 
     [HttpGet("runs/{runId}/status")]
-    public IActionResult GetRunStatus(string runId)
+    public async Task<IActionResult> GetRunStatus(string runId)
     {
-        return Ok(new { runId, status = "running", progress = 0 });
+        var run = await service.GetRunStatusAsync(runId);
+        return run is null ? NotFound() : Ok(run);
     }
 }

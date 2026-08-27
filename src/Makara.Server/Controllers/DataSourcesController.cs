@@ -1,3 +1,4 @@
+using Makara.Core.Interfaces;
 using Makara.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -5,41 +6,44 @@ namespace Makara.Server.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class DataSourcesController : ControllerBase
+public class DataSourcesController(IDataSourceService service) : ControllerBase
 {
     [HttpGet]
-    public IActionResult List()
-    {
-        return Ok(new List<DataSource>());
-    }
+    public async Task<IActionResult> List() =>
+        Ok(await service.ListAsync());
 
     [HttpGet("{id}")]
-    public IActionResult Get(string id)
+    public async Task<IActionResult> Get(string id)
     {
-        return Ok(new { id });
+        var ds = await service.GetAsync(id);
+        return ds is null ? NotFound() : Ok(ds);
     }
 
     [HttpPost]
-    public IActionResult Create([FromBody] DataSource dataSource)
+    public async Task<IActionResult> Create([FromBody] DataSource dataSource)
     {
-        return CreatedAtAction(nameof(Get), new { id = dataSource.Id }, dataSource);
+        var created = await service.CreateAsync(dataSource);
+        return CreatedAtAction(nameof(Get), new { id = created.Id }, created);
     }
 
     [HttpPut("{id}")]
-    public IActionResult Update(string id, [FromBody] DataSource dataSource)
+    public async Task<IActionResult> Update(string id, [FromBody] DataSource dataSource)
     {
+        await service.UpdateAsync(id, dataSource);
         return NoContent();
     }
 
     [HttpDelete("{id}")]
-    public IActionResult Delete(string id)
+    public async Task<IActionResult> Delete(string id)
     {
+        await service.DeleteAsync(id);
         return NoContent();
     }
 
     [HttpPost("test")]
-    public IActionResult TestConnection([FromBody] DataSource dataSource)
+    public async Task<IActionResult> TestConnection([FromBody] DataSource dataSource)
     {
-        return Ok(new { connected = true });
+        var connected = await service.TestConnectionAsync(dataSource);
+        return Ok(new { connected });
     }
 }
