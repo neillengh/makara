@@ -1,0 +1,73 @@
+## .NET
+bin/
+obj/
+*.user
+*.suo
+*.userprefs
+*.cache
+*.log
+*.pidb
+*.swp
+*~
+*.DS_Store
+
+## Visual Studio
+.vs/
+*.vspscc
+*.vssscc
+
+## Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+## NuGet
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+*.nuget.props
+
+## Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+env/
+.ipynb_checkpoints/
+
+## Node
+node_modules/
+
+## IDE
+.idea/
+*.swp
+.vscode/
+!.vscode/settings.json
+
+## OS
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+## Project specific
+appsettings.Local.json
+appsettings.Development.json
+*.sqlite
+*.db
+output/
+datasets/
+models/
