@@ -70,4 +70,4 @@ appsettings.Development.json
 *.db
 output/
 datasets/
-models/
+/models/

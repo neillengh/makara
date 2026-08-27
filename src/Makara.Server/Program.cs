@@ -25,6 +25,7 @@ builder.Services.AddMakaraInfrastructure(connectionString);
 // Services
 builder.Services.AddScoped<IDataSourceService, DataSourceService>();
 builder.Services.AddScoped<IWorkflowService, WorkflowService>();
+builder.Services.AddScoped<IEtlService, EtlService>();
 
 var app = builder.Build();
 

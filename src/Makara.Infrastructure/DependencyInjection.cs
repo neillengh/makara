@@ -2,6 +2,7 @@ using Makara.Core.Interfaces;
 using Makara.Core.Models;
 using Makara.Infrastructure.Data;
 using Makara.Infrastructure.DataSourceProviders;
+using Makara.Infrastructure.DataProcessing;
 using Makara.Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -21,6 +22,9 @@ public static class DependencyInjection
         services.AddScoped<SqlServerProvider>();
         services.AddScoped<MySqlProvider>();
         services.AddScoped<DataSourceProviderFactory>();
+
+        services.AddScoped<DataCleaner>();
+        services.AddScoped<IDatasetBuilder, DatasetBuilder>();
 
         return services;
     }

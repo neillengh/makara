@@ -9,6 +9,10 @@ public interface IDatasetBuilder
         IEnumerable<Dictionary<string, object>> rawData,
         DatasetConfig config,
         string outputDir);
+
+    string ConvertRecord(
+        Dictionary<string, object> row,
+        DatasetConfig config);
 }
 
 public class DatasetResult
