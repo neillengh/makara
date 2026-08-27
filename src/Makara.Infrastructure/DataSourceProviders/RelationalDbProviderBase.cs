@@ -61,12 +61,15 @@ public abstract class RelationalDbProviderBase : IDataSourceProvider
 
     protected virtual string BuildQuery(DataSource dataSource, string? incrementalValue)
     {
-        if (!string.IsNullOrEmpty(dataSource.Query))
-        {
-            if (!string.IsNullOrEmpty(dataSource.IncrementalField) && incrementalValue != null)
-                return $"{dataSource.Query} AND {dataSource.IncrementalField} > @incrementalValue";
+        if (string.IsNullOrEmpty(dataSource.Query))
+            return string.Empty;
+
+        if (string.IsNullOrEmpty(dataSource.IncrementalField) || incrementalValue == null)
             return dataSource.Query;
-        }
-        return string.Empty;
+
+        var query = dataSource.Query.Trim();
+        var hasWhere = query.Contains(" WHERE ", StringComparison.OrdinalIgnoreCase);
+        var connector = hasWhere ? " AND " : " WHERE ";
+        return $"{query}{connector}{dataSource.IncrementalField} > @incrementalValue";
     }
 }

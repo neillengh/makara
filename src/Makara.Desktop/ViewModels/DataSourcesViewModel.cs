@@ -41,9 +41,41 @@ public partial class DataSourcesViewModel : ObservableObject
 
     public IEnumerable<DataSourceType> DataSourceTypes => Enum.GetValues<DataSourceType>();
 
+    [ObservableProperty]
+    private string _connectionStringHint = string.Empty;
+
+    [ObservableProperty]
+    private string _queryHint = string.Empty;
+
     public DataSourcesViewModel(ApiClient api)
     {
         _api = api;
+        UpdateHints(DataSourceType.SqlServer);
+    }
+
+    partial void OnNewTypeChanged(DataSourceType value) => UpdateHints(value);
+
+    private void UpdateHints(DataSourceType type)
+    {
+        ConnectionStringHint = type switch
+        {
+            DataSourceType.SqlServer => "Server=localhost,1433;Database=mydb;User Id=sa;Password=xxx;TrustServerCertificate=True",
+            DataSourceType.MySql => "Server=localhost;Port=3306;Database=mydb;User Id=root;Password=xxx",
+            DataSourceType.PostgreSQL => "Host=localhost;Port=5432;Database=mydb;Username=postgres;Password=xxx",
+            DataSourceType.Csv => "文件完整路径，如 C:\\data\\input.csv",
+            DataSourceType.Excel => "文件完整路径，如 C:\\data\\input.xlsx",
+            DataSourceType.Json => "文件完整路径，如 C:\\data\\input.json",
+            _ => string.Empty
+        };
+
+        QueryHint = type switch
+        {
+            DataSourceType.SqlServer or DataSourceType.MySql or DataSourceType.PostgreSQL
+                => "SQL 查询语句，如 SELECT * FROM users WHERE status = 'active'",
+            DataSourceType.Csv or DataSourceType.Excel
+                => "工作表名称（可选，留空读取第一个）",
+            _ => string.Empty
+        };
     }
 
     [RelayCommand]
