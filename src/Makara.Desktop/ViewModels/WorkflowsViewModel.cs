@@ -36,9 +36,17 @@ public partial class WorkflowsViewModel : ObservableObject
     [ObservableProperty]
     private string _activeRunId = string.Empty;
 
+    public Action<string>? OnEditWorkflow { get; set; }
+
     public WorkflowsViewModel(ApiClient api)
     {
         _api = api;
+    }
+
+    [RelayCommand]
+    private void Edit(Workflow wf)
+    {
+        OnEditWorkflow?.Invoke(wf.Id);
     }
 
     [RelayCommand]

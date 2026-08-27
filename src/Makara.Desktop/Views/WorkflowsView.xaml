@@ -38,6 +38,8 @@
                                 <Border Background="{StaticResource BgSecondaryBrush}" CornerRadius="6" Padding="12,10" Margin="0,2">
                                     <DockPanel>
                                         <StackPanel DockPanel.Dock="Right" VerticalAlignment="Center" Orientation="Horizontal">
+                                            <Button Content="编辑画布" Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                                    CommandParameter="{Binding}" FontSize="11" Padding="10,4" Margin="0,0,4,0"/>
                                             <Button Content="运行" Command="{Binding DataContext.RunCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
                                                     CommandParameter="{Binding}" FontSize="11" Padding="10,4" Margin="0,0,4,0"
                                                     Background="#00D9FF" Foreground="#1A1A2E"/>

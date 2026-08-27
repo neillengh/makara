@@ -30,7 +30,10 @@ public partial class MainViewModel : ObservableObject
         CurrentPage = page;
         CurrentView = page switch
         {
-            "workflows" => new WorkflowsView { DataContext = new WorkflowsViewModel(_api) },
+            "workflows" => new WorkflowsView
+            {
+                DataContext = new WorkflowsViewModel(_api) { OnEditWorkflow = OpenCanvas }
+            },
             "datasources" => new DataSourcesView { DataContext = new DataSourcesViewModel(_api) },
             "runs" => new RunsView { DataContext = new RunsViewModel(_sse) },
             _ => new TextBlock
@@ -41,6 +44,15 @@ public partial class MainViewModel : ObservableObject
                 VerticalAlignment = System.Windows.VerticalAlignment.Center,
                 Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0xA0, 0xA0, 0xB0))
             }
+        };
+    }
+
+    private void OpenCanvas(string workflowId)
+    {
+        CurrentPage = "canvas";
+        CurrentView = new WorkflowCanvasView
+        {
+            DataContext = new WorkflowCanvasViewModel(_api, workflowId)
         };
     }
 }
