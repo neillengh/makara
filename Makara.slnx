@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Makara.Core/Makara.Core.csproj" />
+    <Project Path="src/Makara.Desktop/Makara.Desktop.csproj" />
+    <Project Path="src/Makara.Infrastructure/Makara.Infrastructure.csproj" />
+    <Project Path="src/Makara.Server/Makara.Server.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Makara.Core.Tests/Makara.Core.Tests.csproj" />
+    <Project Path="tests/Makara.Server.Tests/Makara.Server.Tests.csproj" />
+  </Folder>
+</Solution>

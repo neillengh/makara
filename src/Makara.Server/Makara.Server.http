@@ -1,0 +1,6 @@
+@Makara.Server_HostAddress = http://localhost:5273
+
+GET {{Makara.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
