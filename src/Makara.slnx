@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Makara.Core/Makara.Core.csproj" />
+  <Project Path="Makara.Desktop/Makara.Desktop.csproj" />
+  <Project Path="Makara.Infrastructure/Makara.Infrastructure.csproj" />
+  <Project Path="Makara.Server/Makara.Server.csproj" />
+</Solution>
