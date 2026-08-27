@@ -7,11 +7,16 @@ public class WorkflowService : IWorkflowService
 {
     private readonly IRepository<Workflow> _repo;
     private readonly IRepository<WorkflowRun> _runRepo;
+    private readonly IWorkflowEngine _engine;
 
-    public WorkflowService(IRepository<Workflow> repo, IRepository<WorkflowRun> runRepo)
+    public WorkflowService(
+        IRepository<Workflow> repo,
+        IRepository<WorkflowRun> runRepo,
+        IWorkflowEngine engine)
     {
         _repo = repo;
         _runRepo = runRepo;
+        _engine = engine;
     }
 
     public async Task<IEnumerable<Workflow>> ListAsync() =>
@@ -35,15 +40,10 @@ public class WorkflowService : IWorkflowService
 
     public async Task<string> RunAsync(string workflowId)
     {
-        var run = new WorkflowRun
-        {
-            WorkflowId = workflowId,
-            Status = "queued",
-            StartedAt = DateTime.UtcNow
-        };
-        await _runRepo.InsertAsync(run);
-        // TODO: 触发工作流执行引擎
-        return run.Id;
+        var workflow = await _repo.GetByIdAsync(workflowId)
+            ?? throw new InvalidOperationException("工作流不存在");
+
+        return await _engine.RunAsync(workflow);
     }
 
     public async Task<WorkflowRun?> GetRunStatusAsync(string runId) =>
