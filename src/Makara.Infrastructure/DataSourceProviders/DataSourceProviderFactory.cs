@@ -9,12 +9,17 @@ public class DataSourceProviderFactory
 
     public DataSourceProviderFactory(
         SqlServerProvider sqlServer,
-        MySqlProvider mySql)
+        MySqlProvider mySql,
+        PostgreSqlProvider postgreSql,
+        FileProvider fileProvider)
     {
         _providers = new()
         {
             [DataSourceType.SqlServer] = sqlServer,
-            [DataSourceType.MySql] = mySql
+            [DataSourceType.MySql] = mySql,
+            [DataSourceType.PostgreSQL] = postgreSql,
+            [DataSourceType.Csv] = fileProvider,
+            [DataSourceType.Excel] = fileProvider
         };
     }
 

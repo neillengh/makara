@@ -21,6 +21,8 @@ public static class DependencyInjection
 
         services.AddScoped<SqlServerProvider>();
         services.AddScoped<MySqlProvider>();
+        services.AddScoped<PostgreSqlProvider>();
+        services.AddScoped<FileProvider>();
         services.AddScoped<DataSourceProviderFactory>();
 
         services.AddScoped<DataCleaner>();
