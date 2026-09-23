@@ -27,6 +27,10 @@ public class AppSettings
     public bool SsePush { get; set; } = true;
     public bool TaskReminder { get; set; } = true;
     public string NotifyEmail { get; set; } = string.Empty;
+
+    // 登录（记住我）
+    public string LastLoginServer { get; set; } = string.Empty;
+    public string LastLoginUser { get; set; } = string.Empty;
 }
 
 /// <summary>

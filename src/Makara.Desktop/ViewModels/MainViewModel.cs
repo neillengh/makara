@@ -43,6 +43,8 @@ public partial class MainViewModel : ObservableObject
         "runs" => "执行记录",
         "servers" => "服务端",
         "settings" => "设置",
+        "workflow-templates" => "工作流模板",
+        "field-mapping" => "字段映射",
         "canvas" => "工作流画布",
         _ => "Makara"
     };
@@ -123,6 +125,8 @@ public partial class MainViewModel : ObservableObject
                 DataContext = new ServersViewModel(_serverConfig, _api) { OnServersChanged = RefreshServerStatus }
             },
             "settings" => new SettingsView { DataContext = new SettingsViewModel(_settings, _theme) },
+            "workflow-templates" => new WorkflowTemplatesView { DataContext = new WorkflowTemplatesViewModel() },
+            "field-mapping" => new FieldMappingView { DataContext = new FieldMappingViewModel() },
             _ => CurrentView
         };
     }

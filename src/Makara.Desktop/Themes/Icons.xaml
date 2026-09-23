@@ -12,6 +12,12 @@
     <!-- 工作流：git-branch -->
     <sys:String x:Key="IconBranch">M6 3 L6 15 M18 9 A3 3 0 1 0 18 3 A3 3 0 0 0 18 9 M6 21 A3 3 0 1 0 6 15 A3 3 0 0 0 6 21 M18 9 A9 9 0 0 1 9 18</sys:String>
 
+    <!-- 锁：password -->
+    <sys:String x:Key="IconLock">M6 10 L18 10 A2 2 0 0 1 20 12 L20 18 A2 2 0 0 1 18 20 L6 20 A2 2 0 0 1 4 18 L4 12 A2 2 0 0 1 6 10 Z M9 10 L9 7 A3 3 0 0 1 15 7 L15 10</sys:String>
+
+    <!-- 右箭头：映射连线 -->
+    <sys:String x:Key="IconArrowRight">M5 12 L19 12 M12 5 L19 12 L12 19</sys:String>
+
     <!-- 数据源：database -->
     <sys:String x:Key="IconDatabase">M12 3 C16.4 3 20 4.3 20 6 L20 18 C20 19.7 16.4 21 12 21 C7.6 21 4 19.7 4 18 L4 6 C4 4.3 7.6 3 12 3 Z M4 6 C4 7.7 7.6 9 12 9 C16.4 9 20 7.7 20 6 M4 12 C4 13.7 7.6 15 12 15 C16.4 15 20 13.7 20 12 M4 18 C4 19.7 7.6 21 12 21 C16.4 21 20 19.7 20 18</sys:String>
 

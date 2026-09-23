@@ -84,6 +84,15 @@
                         </StackPanel>
                     </RadioButton>
                     <RadioButton Style="{StaticResource NavButton}" GroupName="nav"
+                                 IsChecked="{Binding CurrentPage, Converter={StaticResource PageEq}, ConverterParameter=workflow-templates}"
+                                 Command="{Binding NavigateCommand}" CommandParameter="workflow-templates">
+                        <StackPanel Orientation="Horizontal">
+                            <Path Data="{StaticResource IconFiles}" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"
+                                  StrokeThickness="1.6" Stretch="Uniform" Width="18" Height="18" VerticalAlignment="Center"/>
+                            <TextBlock Text="工作流模板" Margin="12,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource NavButton}" GroupName="nav"
                                  IsChecked="{Binding CurrentPage, Converter={StaticResource PageEq}, ConverterParameter=datasources}"
                                  Command="{Binding NavigateCommand}" CommandParameter="datasources">
                         <StackPanel Orientation="Horizontal">
@@ -99,6 +108,15 @@
                             <Path Data="{StaticResource IconTable}" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"
                                   StrokeThickness="1.6" Stretch="Uniform" Width="18" Height="18" VerticalAlignment="Center"/>
                             <TextBlock Text="数据集" Margin="12,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource NavButton}" GroupName="nav"
+                                 IsChecked="{Binding CurrentPage, Converter={StaticResource PageEq}, ConverterParameter=field-mapping}"
+                                 Command="{Binding NavigateCommand}" CommandParameter="field-mapping">
+                        <StackPanel Orientation="Horizontal">
+                            <Path Data="{StaticResource IconArrowRight}" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"
+                                  StrokeThickness="1.6" Stretch="Uniform" Width="18" Height="18" VerticalAlignment="Center"/>
+                            <TextBlock Text="字段映射" Margin="12,0,0,0" VerticalAlignment="Center"/>
                         </StackPanel>
                     </RadioButton>
                     <RadioButton Style="{StaticResource NavButton}" GroupName="nav"

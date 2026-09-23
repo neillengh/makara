@@ -122,4 +122,20 @@ public class ApiClient
 
     public async Task DisableSchedulerAsync() =>
         await _http.PostAsync("api/scheduler/disable", null);
+
+    // === Auth ===
+    /// <summary>用户名密码登录，成功返回 LoginResponse（含 token 与用户信息）</summary>
+    public async Task<LoginResponse?> LoginAsync(string username, string password)
+    {
+        try
+        {
+            var resp = await _http.PostAsJsonAsync("api/auth/login", new { username, password });
+            if (!resp.IsSuccessStatusCode) return null;
+            return await resp.Content.ReadFromJsonAsync<LoginResponse>();
+        }
+        catch
+        {
+            return null;
+        }
+    }
 }
